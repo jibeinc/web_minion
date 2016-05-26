@@ -18,4 +18,8 @@ class MechanizeBot < JibeRulesetBot::Bot
     button = @bot.page.at(target)
     @bot.click(button)
   end
+
+  def url_equals(_target, value)
+    @bot.page.uri.to_s == value
+  end
 end

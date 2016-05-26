@@ -8,10 +8,11 @@ class FlowTest < Minitest::Test
     step_two = Step.new(name: 'Step Two',
                         target: "/html/body/a[1]",
                         method: :click, value: nil, is_validator: false)
-    action = Action.new("Action", [step_one, step_two])
+    step_three = Step.new(name: 'Validation', target: nil, method: :url_equals,
+                          value: 'https://pgp.mit.edu/extracthelp.html',
+                          is_validator: true)
+    action = Action.new("Action", [step_one, step_two, step_three])
     bot = MechanizeBot.new
-    flow = Flow.new([action], bot)
-    flow.perform
-    assert_equal 'https://pgp.mit.edu/extracthelp.html', bot.page.uri.to_s
+    assert Flow.new([action], bot)
   end
 end

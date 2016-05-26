@@ -6,7 +6,8 @@ class Step
   VALID_METHODS = [
     :go,
     :select,
-    :click
+    :click,
+    :url_equals
   ].freeze
 
   def initialize(fields = {})

@@ -3,11 +3,28 @@ class Action
 
   def initialize(name, steps)
     @name = name
+    send("steps=", steps)
+  end
+
+  def steps=(steps)
+    unless steps.last.validator?
+      warn "WARNING: The final step for action: #{@name} is not a validation step!"
+      warn "         Without a final validation step an action can not confirm success!"
+    end
     @steps = steps
   end
 
   # Again, boilerplate for initial setup
   def perform(bot)
-    @steps.each { |step| step.perform(bot) }
+    status = @steps.map do |step|
+      if step.validator?
+        step.perform(bot)
+      else
+        step.perform(bot)
+        nil
+      end
+    end
+
+    !status.reject(&:nil?).include?(false)
   end
 end
