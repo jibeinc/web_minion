@@ -9,7 +9,7 @@ class Action
   def steps=(steps)
     unless steps.last.validator?
       warn "WARNING: The final step for action: #{@name} is not a validation step!"
-      warn "         Without a final validation step an action can not confirm success!"
+      warn "Without a final validation step an action can not confirm success!"
     end
     @steps = steps
   end

@@ -9,6 +9,6 @@ class Flow
   # Simplest form (boilerplate for now). Executes all actions in order
   # ignoring error handling
   def perform
-    @actions.each { |action| action.perform(bot) }
+    !@actions.map { |action| action.perform(bot) }.include?(false)
   end
 end
