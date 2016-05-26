@@ -13,6 +13,12 @@ class FlowTest < Minitest::Test
                           is_validator: true)
     action = Action.new("Action", [step_one, step_two, step_three])
     bot = MechanizeBot.new
-    assert Flow.new([action], bot)
+    assert action.perform(bot)
+
+    step_three_alt = Step.new(name: 'Validation', target: nil, method: :url_equals,
+                              value: 'https://pgp.mit.edu/foo.html',
+                              is_validator: true)
+    action = Action.new("Alt Action", [step_one, step_two, step_three_alt])
+    refute action.perform(bot)
   end
 end
