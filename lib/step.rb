@@ -1,10 +1,12 @@
 class InvalidMethodError < StandardError; end
 
 class Step
-  attr_accessor :name, :target, :method, :value, :validator
+  attr_accessor :name, :target, :method, :value, :is_validator
 
   VALID_METHODS = [
+    :go,
     :select,
+    :click
   ].freeze
 
   def initialize(fields = {})
@@ -13,9 +15,17 @@ class Step
     end
   end
 
+  def perform(bot)
+    bot.execute_step(@method, @target, @value)
+  end
+
   def method=(method)
     raise(InvalidMethodError, "Method: #{method} is not valid") unless valid_method?(method)
-    self.method = method
+    @method = method
+  end
+
+  def validator?
+    is_validator
   end
 
   def valid_method?(method)

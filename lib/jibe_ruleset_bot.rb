@@ -4,9 +4,9 @@ module JibeRulesetBot
 
   class Bot
     attr_reader :config
+    attr_accessor :bot
 
     def intialize(config)
-
     end
 
     def execute_step(method, target, value)
