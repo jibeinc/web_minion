@@ -9,7 +9,7 @@ module JibeRulesetBot
     def intialize(config)
     end
 
-    def execute_step(method, target, value)
+    def execute_step(method, target, value = nil)
       method(method).call(target, value)
     end
 
