@@ -1,5 +1,7 @@
 require 'mechanize'
 
+# Mechanize driven bot. More efficient, but can't handle any dynamic js-driven
+# pages
 class MechanizeBot < JibeRulesetBot::Bot
 
   def initialize
