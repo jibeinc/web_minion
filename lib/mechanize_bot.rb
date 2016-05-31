@@ -44,6 +44,12 @@ class MechanizeBot < JibeRulesetBot::Bot
     options.first.click
   end
 
+  def select_radio_button(target, _value, element)
+    radio = element.radiobutton_with(target)
+    radio.checked = true
+    radio
+  end
+
   ## VALIDATION METHODS ##
 
   def url_equals(_target, value, _element)

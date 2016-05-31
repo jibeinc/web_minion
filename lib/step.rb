@@ -10,6 +10,7 @@ class Step
     :get_form,
     :get_field,
     :select_field,
+    :select_radio_button,
     :url_equals,
     :value_equals
   ].freeze
