@@ -1,5 +1,7 @@
 require 'mechanize'
 
+class MultipleOptionsFoundError < StandardError; end
+
 # Mechanize driven bot. More efficient, but can't handle any dynamic js-driven
 # pages
 class MechanizeBot < JibeRulesetBot::Bot
@@ -16,20 +18,43 @@ class MechanizeBot < JibeRulesetBot::Bot
     page.body.to_s
   end
 
-  def go(target, _value)
+  def go(target, _value, _element)
     @bot.get(target)
   end
 
-  def click(target, _value)
+  def click(target, _value, _element)
     button = @bot.page.at(target)
     @bot.click(button)
   end
 
-  def url_equals(_target, value)
+  ## FORM METHODS ##
+  # Must have an element passed to them (except get form)
+
+  def get_form(target, _value, _element)
+    @bot.page.form_with(target)
+  end
+
+  def get_field(target, _value, element)
+    element.field_with(target)
+  end
+
+  def select_field(target, _value, element)
+    options = element.options_with(target)
+    raise(MultipleOptionsFoundError, "For target: #{target}") if options.count > 1
+    options.first.click
+  end
+
+  ## VALIDATION METHODS ##
+
+  def url_equals(_target, value, _element)
     @bot.page.uri.to_s == value
   end
 
-  def body_includes(_target, value)
+  def body_includes(_target, value, _element)
     body.index(value) > 0
+  end
+
+  def value_equals(_target, value, element)
+    element && (element.value == value)
   end
 end

@@ -7,7 +7,11 @@ class Step
     :go,
     :select,
     :click,
-    :url_equals
+    :get_form,
+    :get_field,
+    :select_field,
+    :url_equals,
+    :value_equals
   ].freeze
 
   def initialize(fields = {})
@@ -16,8 +20,8 @@ class Step
     end
   end
 
-  def perform(bot)
-    bot.execute_step(@method, @target, @value)
+  def perform(bot, element = nil)
+    bot.execute_step(@method, @target, @value, element)
   end
 
   def method=(method)

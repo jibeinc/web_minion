@@ -16,11 +16,12 @@ class Action
 
   # Again, boilerplate for initial setup
   def perform(bot)
+    element = nil
     status = @steps.map do |step|
       if step.validator?
-        step.perform(bot)
+        step.perform(bot, element)
       else
-        step.perform(bot)
+        element = step.perform(bot, element)
         nil
       end
     end

@@ -9,8 +9,8 @@ module JibeRulesetBot
     def intialize(config)
     end
 
-    def execute_step(method, target, value = nil)
-      method(method).call(target, value)
+    def execute_step(method, target, value = nil, element = nil)
+      method(method).call(target, value, element)
     end
 
     def select(target, value)
