@@ -1,7 +1,7 @@
 require 'mechanize'
 
 class MultipleOptionsFoundError < StandardError; end
-
+class NoInputFound < StandardError; end
 # Mechanize driven bot. More efficient, but can't handle any dynamic js-driven
 # pages
 class MechanizeBot < JibeRulesetBot::Bot
@@ -36,6 +36,13 @@ class MechanizeBot < JibeRulesetBot::Bot
 
   def get_field(target, _value, element)
     element.field_with(target)
+  end
+
+  def fill_in_input(target, value, element)
+    input = element[target]
+    raise(NoInputFound, "For target: #{target}") unless input
+    element[target] = value
+    element
   end
 
   def select_field(target, _value, element)

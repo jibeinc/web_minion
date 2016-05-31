@@ -6,6 +6,7 @@ class MechanizeBotTest < Minitest::Test
     @bot = MechanizeBot.new
     @select_test_file = "file://#{Dir.pwd}/test/test_html/select_test.html"
     @radio_test_file = "file://#{Dir.pwd}/test/test_html/radio_button_test.html"
+    @input_test_file = "file://#{Dir.pwd}/test/test_html/input_test.html"
   end
 
   def test_body_includes
@@ -45,5 +46,12 @@ class MechanizeBotTest < Minitest::Test
     el = @bot.execute_step(:select_radio_button, { value: '150' }, nil, form)
     assert el.checked
     assert_equal '150', el.value
+  end
+
+  def test_input_method
+    @bot.execute_step(:go, @input_test_file)
+    form = @bot.execute_step(:get_form, id: 'form_id')
+    el = @bot.execute_step(:fill_in_input, { name: 'Username' }, 'Andrew', form)
+    assert_equal 'Andrew', el['Username']
   end
 end
