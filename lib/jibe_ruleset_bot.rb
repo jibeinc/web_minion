@@ -12,9 +12,5 @@ module JibeRulesetBot
     def execute_step(method, target, value = nil, element = nil)
       method(method).call(target, value, element)
     end
-
-    def select(target, value)
-      puts "SELECT: #{target}, #{value}"
-    end
   end
 end

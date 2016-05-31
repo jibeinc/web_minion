@@ -30,6 +30,10 @@ class MechanizeBot < JibeRulesetBot::Bot
   ## FORM METHODS ##
   # Must have an element passed to them (except get form)
 
+  def get_form_in_index(target, _value, _element)
+    @bot.page.forms[target]
+  end
+
   def get_form(target, _value, _element)
     @bot.page.form_with(target)
   end
@@ -43,6 +47,11 @@ class MechanizeBot < JibeRulesetBot::Bot
     raise(NoInputFound, "For target: #{target}") unless input
     element[target] = value
     element
+  end
+
+  # Element should be an instance of a form
+  def submit(_target, _value, element)
+    @bot.submit element
   end
 
   def select_field(target, _value, element)

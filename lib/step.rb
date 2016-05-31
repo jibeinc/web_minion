@@ -8,9 +8,11 @@ class Step
     :select,
     :click,
     :get_form,
+    :get_form_in_index,
     :get_field,
     :select_field,
     :select_radio_button,
+    :submit,
     :fill_in_input,
     :url_equals,
     :value_equals
@@ -28,7 +30,7 @@ class Step
 
   def method=(method)
     raise(InvalidMethodError, "Method: #{method} is not valid") unless valid_method?(method)
-    @method = method
+    @method = method.to_sym
   end
 
   def validator?
