@@ -27,6 +27,10 @@ class MechanizeBot < JibeRulesetBot::Bot
     @bot.click(button)
   end
 
+  def save_page_html(_target, value, _element)
+    write_html_file(value)
+  end
+
   ## FORM METHODS ##
   # Must have an element passed to them (except get form)
 
@@ -78,5 +82,11 @@ class MechanizeBot < JibeRulesetBot::Bot
 
   def value_equals(_target, value, element)
     element && (element.value == value)
+  end
+
+  private
+
+  def write_html_file(filename)
+    File.open(filename, 'w') { |f| f.puts body }
   end
 end

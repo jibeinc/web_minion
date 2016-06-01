@@ -15,7 +15,8 @@ class Step
     :submit,
     :fill_in_input,
     :url_equals,
-    :value_equals
+    :value_equals,
+    :save_page_html
   ].freeze
 
   def initialize(fields = {})
