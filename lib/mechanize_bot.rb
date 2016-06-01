@@ -1,4 +1,5 @@
 require 'mechanize'
+require 'jibe_ruleset_bot'
 
 class MultipleOptionsFoundError < StandardError; end
 class NoInputFound < StandardError; end
@@ -6,7 +7,8 @@ class NoInputFound < StandardError; end
 # pages
 class MechanizeBot < JibeRulesetBot::Bot
 
-  def initialize
+  def initialize(config = {})
+    super(config)
     @bot = Mechanize.new
   end
 

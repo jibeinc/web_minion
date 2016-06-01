@@ -21,4 +21,10 @@ class FlowTest < Minitest::Test
     action = Action.new("Alt Action", [step_one, step_two, step_three_alt])
     refute Flow.new([action], bot).perform
   end
+
+  def test_building_from_json
+    json = File.read("#{Dir.pwd}/test/test_json/test_json_one.json")
+    flow = Flow.build_via_json(json)
+    assert flow
+  end
 end

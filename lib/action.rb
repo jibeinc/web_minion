@@ -3,13 +3,18 @@ class Action
 
   def initialize(name, steps)
     @name = name
-    send("steps=", steps)
+    send('steps=', steps)
+  end
+
+  def self.build_from_hash(fields = {})
+    steps = fields['steps'].map { |step| Step.new(step) }
+    new(fields['name'], steps)
   end
 
   def steps=(steps)
     unless steps.last.validator?
       warn "WARNING: The final step for action: #{@name} is not a validation step!"
-      warn "Without a final validation step an action can not confirm success!"
+      warn 'Without a final validation step an action can not confirm success!'
     end
     @steps = steps
   end

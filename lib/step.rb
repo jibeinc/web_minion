@@ -30,7 +30,7 @@ class Step
   end
 
   def method=(method)
-    raise(InvalidMethodError, "Method: #{method} is not valid") unless valid_method?(method)
+    raise(InvalidMethodError, "Method: #{method} is not valid") unless valid_method?(method.to_sym)
     @method = method.to_sym
   end
 

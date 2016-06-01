@@ -6,7 +6,8 @@ module JibeRulesetBot
     attr_reader :config
     attr_accessor :bot
 
-    def intialize(config)
+    def initialize(config = {})
+      @config = config
     end
 
     def execute_step(method, target, value = nil, element = nil)
