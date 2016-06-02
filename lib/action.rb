@@ -1,22 +1,31 @@
 class Action
-  attr_reader :name, :key, :steps, :starting_action
+  attr_reader :name, :key, :steps, :starting_action, :on_success, :on_failure
 
-  def initialize(name, steps, key = nil, starting = false)
-    @name = name
-    @key = key || @name
-    @starting_action = starting
-    send('steps=', steps)
+  def initialize(fields = {})
+    @name = fields[:name]
+    @key = fields[:key] || @name
+    @starting_action = fields[:starting]
+    @on_success = fields[:on_success]
+    @on_failure = fields[:on_failure]
+    send('steps=', fields[:steps])
   end
 
   def self.build_from_hash(fields = {})
     steps = fields['steps'].map { |step| Step.new(step) }
     starting = fields['starting'] || false
     starting = starting == 'false' ? false : true unless !!starting == starting
-    new(fields['name'], steps, fields['key'], starting)
+    new(name: fields['name'], steps: steps, key: fields['key'],
+        starting: starting, on_success: fields['on_success'],
+        on_failure: fields['on_failure'])
   end
 
   def starting_action?
     @starting_action
+  end
+
+  def generate_edges(all_actions)
+    @on_success = all_actions[on_success]
+    @on_failure = all_actions[on_failure]
   end
 
   def steps=(steps)

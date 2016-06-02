@@ -36,6 +36,7 @@ class Flow
       @starting_action = action if action.starting_action?
     end
 
+    set_next_actions
     validate_actions
   end
 
@@ -51,11 +52,14 @@ class Flow
 
   private
 
+  def set_next_actions
+    all_actions.each { |act| act.generate_edges(@actions) }
+  end
+
   def validate_actions
     if all_actions.count(&:starting_action?) == 0
       raise(NoStartingActionError, "Flow #{@name} has no starting action!")
     end
-
     true
   end
 end

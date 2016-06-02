@@ -15,13 +15,13 @@ class ActionTest < Minitest::Test
   end
 
   def test_simple_action
-    action = Action.new('Action', [@step_one, @step_two, @step_three,
-                                   @validate_one])
+    action = Action.new(name: 'Action', steps: [@step_one, @step_two,
+                        @step_three, @validate_one])
     assert action.perform(@bot)
   end
 
   def test_no_validation_throws_warning
     steps = [@step_one, @step_two, @step_three]
-    assert_output(nil, /warning/i) { Action.new('Action', steps) }
+    assert_output(nil, /warning/i) { Action.new(name: 'Action', steps: steps) }
   end
 end
