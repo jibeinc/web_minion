@@ -1,6 +1,8 @@
 require 'json'
 require 'mechanize_bot'
 
+class NoStartingActionError < StandardError; end
+
 class Flow
   attr_accessor :actions, :bot
   attr_writer :name
@@ -50,6 +52,10 @@ class Flow
   private
 
   def validate_actions
+    if all_actions.count(&:starting_action?) == 0
+      raise(NoStartingActionError, "Flow #{@name} has no starting action!")
+    end
+
     true
   end
 end

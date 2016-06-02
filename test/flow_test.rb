@@ -2,7 +2,9 @@ require 'test_helper'
 
 class FlowTest < Minitest::Test
   def setup
-    @json = File.read("#{Dir.pwd}/test/test_json/test_json_one.json")
+    json_folder = "/test/test_json/"
+    @json = File.read("#{Dir.pwd}#{json_folder}test_json_one.json")
+    @json_two = File.read("#{Dir.pwd}#{json_folder}no_start.json")
     @flow = Flow.build_via_json(@json)
   end
 
@@ -33,6 +35,10 @@ class FlowTest < Minitest::Test
   end
 
   def test_starting_action_properly_set
-    assert_equal "Action one", @flow.starting_action.name
+    assert_equal 'Action one', @flow.starting_action.name
+  end
+
+  def test_validating_no_start_error
+    assert_raises(NoStartingActionError) { Flow.build_via_json(@json_two) }
   end
 end
