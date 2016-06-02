@@ -15,7 +15,7 @@ class FlowTest < Minitest::Test
                         target: 'https://pgp.mit.edu/',
                         method: :go, value: nil, is_validator: false)
     step_two = Step.new(name: 'Step Two',
-                        target: "/html/body/a[1]",
+                        target: '/html/body/a[1]',
                         method: :click, value: nil, is_validator: false)
     step_three = Step.new(name: 'Validation', target: nil, method: :url_equals,
                           value: 'https://pgp.mit.edu/extracthelp.html',
@@ -49,5 +49,6 @@ class FlowTest < Minitest::Test
     flow = Flow.build_via_json(@json_three)
     assert flow.actions[1].on_success.is_a? Action
     assert flow.actions[1].on_failure.nil?
+    assert_equal [Action], flow.actions[1].next_actions.map(&:class)
   end
 end

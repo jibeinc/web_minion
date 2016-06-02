@@ -1,5 +1,8 @@
+# Represents a group of steps that the bot can perform and valdiate have
+# performed as expected
 class Action
-  attr_reader :name, :key, :steps, :starting_action, :on_success, :on_failure
+  attr_reader :name, :key, :steps, :starting_action
+  attr_accessor :on_success, :on_failure
 
   def initialize(fields = {})
     @name = fields[:name]
@@ -21,6 +24,10 @@ class Action
 
   def starting_action?
     @starting_action
+  end
+
+  def next_actions
+    [on_success, on_failure].compact
   end
 
   def generate_edges(all_actions)
