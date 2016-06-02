@@ -75,15 +75,15 @@ class MechanizeBot < JibeRulesetBot::Bot
   ## VALIDATION METHODS ##
 
   def url_equals(_target, value, _element)
-    @bot.page.uri.to_s == value
+    !!(@bot.page.uri.to_s == value)
   end
 
   def body_includes(_target, value, _element)
-    body.index(value) && body.index(value) > 0
+    !!(body.index(value) && body.index(value) > 0)
   end
 
   def value_equals(_target, value, element)
-    element && (element.value == value)
+    !!(element && (element.value == value))
   end
 
   private
