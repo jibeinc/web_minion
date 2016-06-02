@@ -1,7 +1,7 @@
 class InvalidMethodError < StandardError; end
 
 class Step
-  attr_accessor :name, :target, :method, :value, :is_validator
+  attr_accessor :name, :target, :method, :value, :is_validator, :retain_element
 
   VALID_METHODS = [
     :go,
@@ -33,6 +33,10 @@ class Step
   def method=(method)
     raise(InvalidMethodError, "Method: #{method} is not valid") unless valid_method?(method.to_sym)
     @method = method.to_sym
+  end
+
+  def retain?
+    retain_element
   end
 
   def validator?

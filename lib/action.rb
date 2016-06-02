@@ -56,7 +56,11 @@ class Action
       if step.validator?
         step.perform(bot, element)
       else
-        element = step.perform(bot, element)
+        if step.retain?
+          step.perform(bot, element)
+        else
+          element = step.perform(bot, element)
+        end
         nil
       end
     end
