@@ -5,6 +5,7 @@
     "actions": [
       {
         "name": "Action one",
+        "starting":true,
         "steps": [
           {
             "name":"Step one",
