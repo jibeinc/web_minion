@@ -1,5 +1,7 @@
 require 'json'
 require 'mechanize_bot'
+require 'action'
+require 'cycle_checker'
 
 class Flow
   class NoStartingActionError < StandardError; end
@@ -49,10 +51,20 @@ class Flow
   # ignoring error handling
   # TODO: Update this now that we use the starting action
   def perform
-    !@actions.map { |action| action.perform(bot) }.include?(false)
+    execute_action(@starting_action)
   end
 
   private
+
+  def execute_action(action)
+    @curr_action = action
+    status = action.perform(@bot)
+    if status
+      action.ending_action? ? true : execute_action(action.on_success)
+    else
+      action.on_failure ? execute_action(action.on_failure) : false
+    end
+  end
 
   def set_next_actions
     all_actions.each { |act| act.generate_edges(@actions) }

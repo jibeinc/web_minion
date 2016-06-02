@@ -16,6 +16,7 @@ class Step
     :fill_in_input,
     :url_equals,
     :value_equals,
+    :body_includes,
     :save_page_html
   ].freeze
 

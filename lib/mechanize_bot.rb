@@ -79,7 +79,7 @@ class MechanizeBot < JibeRulesetBot::Bot
   end
 
   def body_includes(_target, value, _element)
-    body.index(value) > 0
+    body.index(value) && body.index(value) > 0
   end
 
   def value_equals(_target, value, element)

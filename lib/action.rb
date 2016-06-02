@@ -1,3 +1,5 @@
+require 'step'
+
 # Represents a group of steps that the bot can perform and valdiate have
 # performed as expected
 class Action
@@ -24,6 +26,10 @@ class Action
 
   def starting_action?
     @starting_action
+  end
+
+  def ending_action?
+    @on_success.nil?
   end
 
   def next_actions
@@ -54,7 +60,6 @@ class Action
         nil
       end
     end
-
     !status.reject(&:nil?).include?(false)
   end
 end
