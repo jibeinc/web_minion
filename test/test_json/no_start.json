@@ -1,11 +1,11 @@
 {
   "config": {},
   "flow": {
-    "name":"Test Flow",
+    "name":"Test Flow Two",
     "actions": [
       {
         "name": "Action one",
-        "starting":true,
+        "starting":false,
         "steps": [
           {
             "name":"Step one",

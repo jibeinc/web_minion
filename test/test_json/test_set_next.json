@@ -1,0 +1,50 @@
+{
+  "config": {},
+  "flow": {
+    "name":"Test Flow And Next Actions",
+    "actions": [
+      {
+        "name": "Action one",
+        "key": 1,
+        "starting":true,
+        "on_success": 2,
+        "steps": [
+          {
+            "name":"Step one",
+            "target":"//xpath",
+            "value":"",
+            "method":"go",
+            "is_validator":false
+          },
+          {
+            "name":"Step Two",
+            "target":"//xpathtwo",
+            "value":"",
+            "method":"url_equals",
+            "is_validator":true
+          }
+        ]
+      },
+      {
+        "name": "Action two",
+        "key": 2,
+        "steps": [
+          {
+            "name":"Step one",
+            "target":"//xpath",
+            "value":"",
+            "method":"go",
+            "is_validator":false
+          },
+          {
+            "name":"Step Two",
+            "target":"//xpathtwo",
+            "value":"",
+            "method":"url_equals",
+            "is_validator":true
+          }
+        ]
+      }
+    ]
+  }
+}

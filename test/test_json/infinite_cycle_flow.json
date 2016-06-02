@@ -1,11 +1,13 @@
 {
   "config": {},
   "flow": {
-    "name":"Test Flow",
+    "name":"Cycle Flow Test",
     "actions": [
       {
         "name": "Action one",
         "starting":true,
+        "key":1,
+        "on_success":2,
         "steps": [
           {
             "name":"Step one",
@@ -21,6 +23,22 @@
             "method":"url_equals",
             "is_validator":true
           }
+        ]
+      },
+      {
+        "name": "Action two",
+        "key": 2,
+        "on_success": 3,
+        "steps": [
+          { "is_validator": true }
+        ]
+      },
+      {
+        "name": "Action three",
+        "key": 3,
+        "on_success": 1,
+        "steps": [
+          { "is_validator": true }
         ]
       }
     ]
