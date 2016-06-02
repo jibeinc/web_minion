@@ -1,9 +1,10 @@
 require 'json'
 require 'mechanize_bot'
 
-class NoStartingActionError < StandardError; end
-
 class Flow
+  class NoStartingActionError < StandardError; end
+  class CyclicalFlowError < StandardError; end
+
   attr_accessor :actions, :bot
   attr_writer :name
   attr_reader :curr_action, :starting_action
@@ -46,6 +47,7 @@ class Flow
 
   # Simplest form (boilerplate for now). Executes all actions in order
   # ignoring error handling
+  # TODO: Update this now that we use the starting action
   def perform
     !@actions.map { |action| action.perform(bot) }.include?(false)
   end
@@ -58,7 +60,11 @@ class Flow
 
   def validate_actions
     if all_actions.count(&:starting_action?) == 0
-      raise(NoStartingActionError, "Flow #{@name} has no starting action!")
+      raise(NoStartingActionError, "Flow: #{@name} has no starting action!")
+    end
+
+    if CycleChecker.new(@starting_action).cycle?
+      raise(CyclicalFlowError, "Flow: #{@name} is cyclical and could enter an infinite loop")
     end
     true
   end
