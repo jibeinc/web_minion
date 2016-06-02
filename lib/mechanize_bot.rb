@@ -66,6 +66,10 @@ class MechanizeBot < JibeRulesetBot::Bot
     options.first.click
   end
 
+  def select_checkbox(target, _value, element)
+    element.checkbox_with(target).check
+  end
+
   def select_radio_button(target, _value, element)
     radio = element.radiobutton_with(target)
     radio.checked = true

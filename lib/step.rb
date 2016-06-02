@@ -12,6 +12,7 @@ class Step
     :get_field,
     :select_field,
     :select_radio_button,
+    :select_checkbox,
     :submit,
     :fill_in_input,
     :url_equals,
