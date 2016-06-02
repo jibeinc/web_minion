@@ -1,10 +1,9 @@
 class CycleChecker
   attr_accessor :checked, :on_stack, :actions, :starting_action, :cyclical
 
-  def initialize(actions, starting_action)
+  def initialize(starting_action)
     @checked = []
     @on_stack = []
-    @actions = actions
     @starting_action = starting_action
     @cyclical = false
     check_for_cycle(starting_action)

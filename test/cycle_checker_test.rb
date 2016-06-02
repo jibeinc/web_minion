@@ -21,11 +21,11 @@ class CycleCheckerTest < Minitest::Test
   end
 
   def test_cycle_checking_functionality
-    assert CycleChecker.new(@actions, @starting_action).cycle?
+    assert CycleChecker.new(@starting_action).cycle?
   end
 
   def test_refute_cycle
     @action_two.on_success = nil
-    refute CycleChecker.new([@action_one, @action_two], @action_one).cycle?
+    refute CycleChecker.new(@action_one).cycle?
   end
 end
