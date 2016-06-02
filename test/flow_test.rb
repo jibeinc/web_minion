@@ -1,10 +1,12 @@
 require 'test_helper'
 
+# Testing for the flow functionality
 class FlowTest < Minitest::Test
   def setup
-    json_folder = "/test/test_json/"
+    json_folder = '/test/test_json/'
     @json = File.read("#{Dir.pwd}#{json_folder}test_json_one.json")
     @json_two = File.read("#{Dir.pwd}#{json_folder}no_start.json")
+    @json_three = File.read("#{Dir.pwd}#{json_folder}test_set_next.json")
     @flow = Flow.build_via_json(@json)
   end
 
@@ -41,5 +43,11 @@ class FlowTest < Minitest::Test
 
   def test_validating_no_start_error
     assert_raises(NoStartingActionError) { Flow.build_via_json(@json_two) }
+  end
+
+  def test_generating_edges_for_success_and_failure_graph
+    flow = Flow.build_via_json(@json_three)
+    assert flow.actions[1].on_success.is_a? Action
+    assert flow.actions[1].on_failure.nil?
   end
 end
