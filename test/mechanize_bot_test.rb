@@ -55,6 +55,14 @@ class MechanizeBotTest < Minitest::Test
     assert_equal 'Andrew', el['Username']
   end
 
+  def test_select_first_radio_button
+    @bot.execute_step(:go, @radio_test_file)
+    form = @bot.execute_step(:get_form, id: 'form_id')
+    el = @bot.execute_step(:select_first_radio_button, nil, nil, form)
+    assert_equal '140', el.value
+    assert el.checked
+  end
+
   def test_save_html
     file_path = "#{Dir.pwd}/test/test_html.html"
     @bot.execute_step(:go, @input_test_file)

@@ -1,5 +1,8 @@
 class InvalidMethodError < StandardError; end
 
+# A Step represents the individual operation that the bot will perform. This
+# often includes grabbing an element from the DOM tree, or performing some
+# operation on an element that has already been found.
 class Step
   attr_accessor :name, :target, :method, :value, :is_validator, :retain_element
 
@@ -12,6 +15,7 @@ class Step
     :get_field,
     :select_field,
     :select_radio_button,
+    :select_first_radio_button,
     :select_checkbox,
     :submit,
     :fill_in_input,
