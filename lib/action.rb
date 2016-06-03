@@ -65,5 +65,8 @@ class Action
       end
     end
     !status.reject(&:nil?).include?(false)
+  rescue StandardError => e
+    puts e
+    return false
   end
 end

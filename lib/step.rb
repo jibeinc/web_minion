@@ -10,6 +10,7 @@ class Step
     :go,
     :select,
     :click,
+    :click_button_in_form,
     :get_form,
     :get_form_in_index,
     :get_field,

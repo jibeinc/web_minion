@@ -29,6 +29,10 @@ class MechanizeBot < JibeRulesetBot::Bot
     @bot.click(button)
   end
 
+  def click_button_in_form(target, _value, element)
+    element.button_with(target).click
+  end
+
   def save_page_html(_target, value, _element)
     write_html_file(value)
   end
