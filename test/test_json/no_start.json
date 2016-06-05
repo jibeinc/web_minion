@@ -1,0 +1,28 @@
+{
+  "config": {},
+  "flow": {
+    "name":"Test Flow Two",
+    "actions": [
+      {
+        "name": "Action one",
+        "starting":false,
+        "steps": [
+          {
+            "name":"Step one",
+            "target":"//xpath",
+            "value":"",
+            "method":"go",
+            "is_validator":false
+          },
+          {
+            "name":"Step Two",
+            "target":"//xpathtwo",
+            "value":"",
+            "method":"url_equals",
+            "is_validator":true
+          }
+        ]
+      }
+    ]
+  }
+}

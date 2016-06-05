@@ -6,15 +6,12 @@ module JibeRulesetBot
     attr_reader :config
     attr_accessor :bot
 
-    def intialize(config)
+    def initialize(config = {})
+      @config = config
     end
 
-    def execute_step(method, target, value)
-      method(method).call(target, value)
-    end
-
-    def select(target, value)
-      puts "SELECT: #{target}, #{value}"
+    def execute_step(method, target, value = nil, element = nil)
+      method(method).call(target, value, element)
     end
   end
 end
