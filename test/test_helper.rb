@@ -5,8 +5,9 @@ if ENV["CI"]
   Coveralls.wear!
 else
   require "simplecov"
-  SimpleCov.start
-  add_filter "/test/"
+  SimpleCov.start do
+    add_filter "/test/"
+  end
 end
 
 require "pry"
