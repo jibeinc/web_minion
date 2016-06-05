@@ -1,16 +1,16 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'mechanize'
+gem "mechanize"
 
 group :development do
-  gem 'pry'
+  gem "pry"
 end
 
 group :test do
-  gem 'minitest'
-  gem 'minitest-reporters'
-  gem 'coveralls', require: false
+  gem "minitest"
+  gem "minitest-reporters"
+  gem "coveralls", require: false
 end
 
-# Specify your gem's dependencies in jibe_ruleset_bot.gemspec
+# Specify your gem"s dependencies in jibe_ruleset_bot.gemspec
 gemspec
