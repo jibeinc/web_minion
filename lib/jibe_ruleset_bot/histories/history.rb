@@ -1,6 +1,6 @@
 module JibeRulesetBot
-  # Histories are used to log the events as the bot performs its flows, steps, and
-  # actions
+  # Histories are used to log the events as the bot performs its flows, steps,
+  # and actions
   class History
     attr_reader :runtime, :status, :start_time, :end_time
 

@@ -26,8 +26,12 @@ class FlowTest < Minitest::Test
   end
 
   def test_validating_no_start_error
-    assert_raises(Flow::NoStartingActionError) { Flow.build_via_json(@json_two) }
-    assert_raises(Flow::CyclicalFlowError) { Flow.build_via_json(@json_four) }
+    [
+      [Flow::NoStartingActionError, @json_two],
+      [Flow::CyclicalFlowError, @json_four]
+    ].each do |exception, json|
+      assert_raises(exception) { Flow.build_via_json(json) }
+    end
   end
 
   def test_generating_edges_for_success_and_failure_graph

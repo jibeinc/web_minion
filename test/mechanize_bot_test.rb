@@ -31,7 +31,10 @@ class MechanizeBotTest < Minitest::Test
     @bot.execute_step(:go, @select_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     field = @bot.execute_step(:get_field, { name: "select_id" }, nil, form)
-    assert @bot.execute_step(:value_equals, "//*[@id='select_id']", "110", field)
+    assert @bot.execute_step(:value_equals,
+                             "//*[@id='select_id']",
+                             "110",
+                             field)
   end
 
   def test_select_value_method
@@ -39,7 +42,10 @@ class MechanizeBotTest < Minitest::Test
     form = @bot.execute_step(:get_form, id: "form_id")
     field = @bot.execute_step(:get_field, { name: "select_id" }, nil, form)
     @bot.execute_step(:select_field, { value: "120" }, nil, field)
-    assert @bot.execute_step(:value_equals, "//*[@id='select_id']", "120", field)
+    assert @bot.execute_step(:value_equals,
+                             "//*[@id='select_id']",
+                             "120",
+                             field)
   end
 
   def test_radio_button_select_method

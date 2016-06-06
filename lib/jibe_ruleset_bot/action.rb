@@ -18,11 +18,10 @@ module JibeRulesetBot
 
     def self.build_from_hash(fields = {})
       steps = fields["steps"].map { |step| Step.new(step) }
-      starting = fields["starting"] || false
-      starting = starting == "false" ? false : true unless !!starting == starting
+      starting = (fields["starting"] || "false") == "false" ? false : true
       new(name: fields["name"], steps: steps, key: fields["key"],
-      starting: starting, on_success: fields["on_success"],
-      on_failure: fields["on_failure"])
+          starting: starting, on_success: fields["on_success"],
+          on_failure: fields["on_failure"])
     end
 
     def starting_action?
@@ -44,8 +43,8 @@ module JibeRulesetBot
 
     def steps=(steps)
       unless steps.last.validator?
-        warn "WARNING: The final step for action: #{@name} is not a validation step!"
-        warn "Without a final validation step an action can not confirm success!"
+        warn "WARNING: Action: #{@name}'s final step is not a validation step!"
+        warn "An action can not confirm its success without a validation step!"
       end
       @steps = steps
     end
