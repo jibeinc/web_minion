@@ -1,9 +1,14 @@
-require 'test_helper'
+require "test_helper"
+require "jibe_ruleset_bot/step"
+require "jibe_ruleset_bot/action"
+require "jibe_ruleset_bot/flow"
 
 # Testing for the flow functionality
 class FlowTest < Minitest::Test
+  include JibeRulesetBot
+
   def setup
-    json_folder = '/test/test_json/'
+    json_folder = "/test/test_json/"
     @json = File.read("#{Dir.pwd}#{json_folder}test_json_one.json")
     @json_two = File.read("#{Dir.pwd}#{json_folder}no_start.json")
     @json_three = File.read("#{Dir.pwd}#{json_folder}test_set_next.json")
@@ -13,11 +18,11 @@ class FlowTest < Minitest::Test
 
   def test_building_from_json
     assert @flow.all_actions.first.is_a? Action
-    assert @flow.actions['Action one'].is_a? Action
+    assert @flow.actions["Action one"].is_a? Action
   end
 
   def test_starting_action_properly_set
-    assert_equal 'Action one', @flow.starting_action.name
+    assert_equal "Action one", @flow.starting_action.name
   end
 
   def test_validating_no_start_error

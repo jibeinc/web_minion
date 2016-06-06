@@ -1,17 +1,6 @@
-require 'jibe_ruleset_bot/version'
-
-module JibeRulesetBot
-
-  class Bot
-    attr_reader :config
-    attr_accessor :bot
-
-    def initialize(config = {})
-      @config = config
-    end
-
-    def execute_step(method, target, value = nil, element = nil)
-      method(method).call(target, value, element)
-    end
-  end
-end
+require "jibe_ruleset_bot/bots/bot"
+require "jibe_ruleset_bot/bots/mechanize_bot"
+require "jibe_ruleset_bot/step"
+require "jibe_ruleset_bot/action"
+require "jibe_ruleset_botflow"
+require "jibe_ruleset_bot/histories/history"
