@@ -1,9 +1,7 @@
 # JibeRulesetBot
-- [![Coveralls](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg)
-- [![Quality](http://img.shields.io/codeclimate/github/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://codeclimate.com/github/jibeinc/jibe_ruleset_bot)
-- [![Coverage](http://img.shields.io/codeclimate/coverage/github/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://codeclimate.com/github/jibeinc/jibe_ruleset_bot)
 - [![Build](http://img.shields.io/travis-ci/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://travis-ci.org/jibeinc/jibe_ruleset_bot)
-- [![Version](http://img.shields.io/gem/v/architecture.svg?style=flat-square)](https://rubygems.org/gems/architecture)
+- [![Quality](http://img.shields.io/codeclimate/github/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://codeclimate.com/github/jibeinc/jibe_ruleset_bot)
+- [![Coveralls](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg)
 - [![Issues](http://img.shields.io/github/issues/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](http://github.com/jibeinc/jibe_ruleset_bot/issues)
 - [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
@@ -38,7 +36,7 @@ Here's a sample login flow:
         "actions": [
           {
             "name": "Login",
-            "key": 'load_login_page',
+            "key": "load_login_page",
             "starting": true,
             "steps":
             [
