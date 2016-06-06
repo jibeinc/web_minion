@@ -12,7 +12,7 @@ module JibeRulesetBot
     def status=(status)
       @status = status ? "Successful" : "Unsuccessful"
     end
-    
+
     def end_time=(end_time)
       @end_time = end_time
       @runtime = @end_time - @start_time if @start_time && @end_time

@@ -4,7 +4,7 @@ require "jibe_ruleset_bot/action"
 
 class ActionTest < Minitest::Test
   include JibeRulesetBot
-  
+
   def setup
     @bot = MechanizeBot.new
     @select_test_file = "file://#{Dir.pwd}/test/test_html/select_test.html"

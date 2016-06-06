@@ -3,7 +3,7 @@ require "jibe_ruleset_bot/bots/mechanize_bot"
 
 class MechanizeBotTest < Minitest::Test
   include JibeRulesetBot
-  
+
   def setup
     @bot = MechanizeBot.new
     @select_test_file = "file://#{Dir.pwd}/test/test_html/select_test.html"

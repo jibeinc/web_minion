@@ -6,9 +6,9 @@ require "jibe_ruleset_bot/histories/flow_history"
 require "jibe_ruleset_bot/histories/action_history"
 
 module JibeRulesetBot
-  # A flow represents the top level watcher of a series of actions that are to be
-  # performed. It tracks the sucess or failure, where to go next given an outcome,
-  # and a history of all actions performed.
+  # A flow represents the top level watcher of a series of actions that are to
+  # be performed. It tracks the sucess or failure, where to go next given an
+  # outcome, and a history of all actions performed.
   class Flow
     class NoStartingActionError < StandardError; end
     class CyclicalFlowError < StandardError; end
@@ -92,8 +92,9 @@ module JibeRulesetBot
 
       if CycleChecker.new(@starting_action).cycle?
         raise(CyclicalFlowError,
-        "Flow: #{@name} is cyclical and could enter an infinite loop")
+              "Flow: #{@name} is cyclical and could enter an infinite loop")
       end
+
       true
     end
   end

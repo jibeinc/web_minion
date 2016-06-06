@@ -5,7 +5,7 @@ require "jibe_ruleset_bot/histories/action_history"
 # Class for testing History classes
 class HistoryTest < Minitest::Test
   include JibeRulesetBot
-  
+
   def test_auto_set_runtime
     t1 = Time.parse("25-05-2016 12:00:00")
     t2 = Time.parse("25-05-2016 12:05:00")

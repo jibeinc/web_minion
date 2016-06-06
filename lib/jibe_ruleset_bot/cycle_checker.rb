@@ -25,7 +25,7 @@ module JibeRulesetBot
           check_for_cycle(act)
         elsif @on_stack.include?(act)
           @cyclical = true
-          return
+          return nil
         end
       end
 
