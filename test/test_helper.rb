@@ -11,11 +11,6 @@ else
 end
 
 require "pry"
-# require "jibe_ruleset_bot"
-# require "action"
-# require "flow"
-# require "histories/history"
-# require "mechanize_bot"
 require "minitest/autorun"
 require "minitest/unit"
 require "minitest/reporters"
