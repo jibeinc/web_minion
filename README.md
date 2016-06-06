@@ -1,4 +1,9 @@
 # JibeRulesetBot
+- [![Build](http://img.shields.io/travis-ci/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://travis-ci.org/jibeinc/jibe_ruleset_bot)
+- [![Quality](http://img.shields.io/codeclimate/github/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://codeclimate.com/github/jibeinc/jibe_ruleset_bot)
+- [![Coveralls](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg)
+- [![Issues](http://img.shields.io/github/issues/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](http://github.com/jibeinc/jibe_ruleset_bot/issues)
+- [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jibe_ruleset_bot`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -31,9 +36,9 @@ Here's a sample login flow:
         "actions": [
           {
             "name": "Login",
-            "key": 'load_login_page',
+            "key": "load_login_page",
             "starting": true,
-            "steps": 
+            "steps":
             [
               {
                 "name": "Go to accounts login page",
@@ -95,4 +100,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/jibein
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
