@@ -1,11 +1,11 @@
 require "test_helper"
-require "jibe_ruleset_bot/step"
-require "jibe_ruleset_bot/action"
-require "jibe_ruleset_bot/flow"
+require "web_minion/step"
+require "web_minion/action"
+require "web_minion/flow"
 
 # Testing for the flow functionality
 class FlowTest < Minitest::Test
-  include JibeRulesetBot
+  include WebMinion
 
   def setup
     json_folder = "/test/test_json/"

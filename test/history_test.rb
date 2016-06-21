@@ -1,10 +1,10 @@
 require "test_helper"
-require "jibe_ruleset_bot/histories/flow_history"
-require "jibe_ruleset_bot/histories/action_history"
+require "web_minion/histories/flow_history"
+require "web_minion/histories/action_history"
 
 # Class for testing History classes
 class HistoryTest < Minitest::Test
-  include JibeRulesetBot
+  include WebMinion
 
   def test_auto_set_runtime
     t1 = Time.parse("25-05-2016 12:00:00")

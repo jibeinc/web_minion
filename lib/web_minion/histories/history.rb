@@ -1,4 +1,4 @@
-module JibeRulesetBot
+module WebMinion
   # Histories are used to log the events as the bot performs its flows, steps,
   # and actions
   class History

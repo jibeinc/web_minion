@@ -1,4 +1,4 @@
-module JibeRulesetBot
+module WebMinion
   class InvalidMethodError < StandardError; end
 
   # A Step represents the individual operation that the bot will perform. This

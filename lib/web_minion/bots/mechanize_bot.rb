@@ -1,12 +1,12 @@
 require "mechanize"
-require "jibe_ruleset_bot/bots/bot"
+require "web_minion/bots/bot"
 
 class MultipleOptionsFoundError < StandardError; end
 class NoInputFound < StandardError; end
 # Mechanize driven bot. More efficient, but can"t handle any dynamic js-driven
 # pages
-module JibeRulesetBot
-  class MechanizeBot < JibeRulesetBot::Bot
+module WebMinion
+  class MechanizeBot < WebMinion::Bot
     def initialize(config = {})
       super(config)
       @bot = Mechanize.new
