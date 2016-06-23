@@ -35,7 +35,12 @@ module WebMinion
 
     def initialize(fields = {})
       fields.each_pair do |k, v|
-        send("#{k}=", v)
+        if valid_method?(k)
+          send("method=", k)
+          @target = v
+        else
+          send("#{k}=", v)
+        end
       end
     end
 
