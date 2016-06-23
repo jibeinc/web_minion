@@ -1,4 +1,4 @@
-module JibeRulesetBot
+module WebMinion
   class CycleChecker
     attr_accessor :checked, :on_stack, :actions, :starting_action, :cyclical
 

@@ -1,8 +1,8 @@
 require "test_helper"
-require "jibe_ruleset_bot/bots/mechanize_bot"
+require "web_minion/bots/mechanize_bot"
 
 class MechanizeBotTest < Minitest::Test
-  include JibeRulesetBot
+  include WebMinion
 
   def setup
     @bot = MechanizeBot.new

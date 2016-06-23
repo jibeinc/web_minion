@@ -1,7 +1,7 @@
-require "jibe_ruleset_bot/histories/action_history"
+require "web_minion/histories/action_history"
 
-module JibeRulesetBot
-  class ActionHistory < JibeRulesetBot::History
+module WebMinion
+  class ActionHistory < WebMinion::History
     attr_reader :action_name, :action_key
 
     def initialize(action_name, action_key)

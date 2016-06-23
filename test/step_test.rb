@@ -1,8 +1,8 @@
 require "test_helper"
-require "jibe_ruleset_bot/step"
+require "web_minion/step"
 
 class StepTest < Minitest::Test
-  include JibeRulesetBot
+  include WebMinion
 
   def test_takes_only_valid_methods
     step = Step.new(is_validator: true)

@@ -1,18 +1,18 @@
-# JibeRulesetBot
-- [![Build](http://img.shields.io/travis-ci/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://travis-ci.org/jibeinc/jibe_ruleset_bot)
-- [![Quality](http://img.shields.io/codeclimate/github/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://codeclimate.com/github/jibeinc/jibe_ruleset_bot)
-- [![Coveralls](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](https://img.shields.io/coveralls/jibeinc/jibe_ruleset_bot.svg)
-- [![Issues](http://img.shields.io/github/issues/jibeinc/jibe_ruleset_bot.svg?style=flat-square)](http://github.com/jibeinc/jibe_ruleset_bot/issues)
+# WebMinion
+- [![Build](http://img.shields.io/travis-ci/jibeinc/web_minion.svg?style=flat-square)](https://travis-ci.org/jibeinc/web_minion)
+- [![Quality](http://img.shields.io/codeclimate/github/jibeinc/web_minion.svg?style=flat-square)](https://codeclimate.com/github/jibeinc/web_minion)
+- [![Coveralls](https://img.shields.io/coveralls/jibeinc/web_minion.svg?style=flat-square)](https://img.shields.io/coveralls/jibeinc/web_minion.svg)
+- [![Issues](http://img.shields.io/github/issues/jibeinc/web_minion.svg?style=flat-square)](http://github.com/jibeinc/web_minion/issues)
 - [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jibe_ruleset_bot`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/web_minion`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'jibe_ruleset_bot'
+gem 'web_minion'
 ```
 
 And then execute:
@@ -21,7 +21,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install jibe_ruleset_bot
+    $ gem install web_minion
 
 ## Usage
 
@@ -94,7 +94,7 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/jibeinc/jibe_ruleset_bot. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/jibeinc/web_minion. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

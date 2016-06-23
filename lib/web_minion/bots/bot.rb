@@ -1,4 +1,4 @@
-module JibeRulesetBot
+module WebMinion
   class Bot
     attr_reader :config
     attr_accessor :bot

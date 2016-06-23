@@ -1,11 +1,11 @@
 require "json"
-require "jibe_ruleset_bot/bots/mechanize_bot"
-require "jibe_ruleset_bot/action"
-require "jibe_ruleset_bot/cycle_checker"
-require "jibe_ruleset_bot/histories/flow_history"
-require "jibe_ruleset_bot/histories/action_history"
+require "web_minion/bots/mechanize_bot"
+require "web_minion/action"
+require "web_minion/cycle_checker"
+require "web_minion/histories/flow_history"
+require "web_minion/histories/action_history"
 
-module JibeRulesetBot
+module WebMinion
   # A flow represents the top level watcher of a series of actions that are to
   # be performed. It tracks the sucess or failure, where to go next given an
   # outcome, and a history of all actions performed.

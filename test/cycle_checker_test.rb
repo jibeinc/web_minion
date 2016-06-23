@@ -1,11 +1,11 @@
 require "test_helper"
-require "jibe_ruleset_bot/step"
-require "jibe_ruleset_bot/action"
-require "jibe_ruleset_bot/cycle_checker"
+require "web_minion/step"
+require "web_minion/action"
+require "web_minion/cycle_checker"
 
 # Testing the cycle checking class
 class CycleCheckerTest < Minitest::Test
-  include JibeRulesetBot
+  include WebMinion
 
   ACTIONS = [
     {

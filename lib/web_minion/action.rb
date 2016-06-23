@@ -1,6 +1,6 @@
-require "jibe_ruleset_bot/step"
+require "web_minion/step"
 
-module JibeRulesetBot
+module WebMinion
   # Represents a group of steps that the bot can perform and valdiate have
   # performed as expected
   class Action
