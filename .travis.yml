@@ -6,3 +6,6 @@ rvm:
   - 2.0.0
   - 1.9.3-p551
   - ruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
