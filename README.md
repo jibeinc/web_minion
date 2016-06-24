@@ -1,11 +1,13 @@
 # WebMinion
 - [![Build](http://img.shields.io/travis-ci/jibeinc/web_minion.svg?style=flat-square)](https://travis-ci.org/jibeinc/web_minion)
 - [![Quality](http://img.shields.io/codeclimate/github/jibeinc/web_minion.svg?style=flat-square)](https://codeclimate.com/github/jibeinc/web_minion)
-- [![Coveralls](https://img.shields.io/coveralls/jibeinc/web_minion.svg?style=flat-square)](https://img.shields.io/coveralls/jibeinc/web_minion.svg)
+- [![Coveralls](https://img.shields.io/coveralls/jibeinc/web_minion.svg?style=flat-square)](https://coveralls.io/github/jibeinc/web_minion)
 - [![Issues](http://img.shields.io/github/issues/jibeinc/web_minion.svg?style=flat-square)](http://github.com/jibeinc/web_minion/issues)
 - [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/web_minion`. To experiment with that code, run `bin/console` for an interactive prompt.
+WebMinion is a metadata-driven browser automation library. Instead of writing a custom bot with lots of code, you can write a JSON configuration and give it to WebMinion to run instead. You can use webdrivers like Mechanize, Capybara/Selenium (TODO) and Capybara/PhantomJS (TODO).
+
+*NOTE* The public API is currently unstable and subject to change.
 
 ## Installation
 
@@ -24,6 +26,12 @@ Or install it yourself as:
     $ gem install web_minion
 
 ## Usage
+
+```ruby
+flow = JSON.parse(File.read("./test/test_json/test_json_one.json"))
+web_minion = WebMinion.create(flow)
+web_minion.perform
+```
 
 ### Sample Flow
 
