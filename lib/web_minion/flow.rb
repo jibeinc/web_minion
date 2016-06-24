@@ -18,7 +18,7 @@ module WebMinion
     attr_reader :curr_action, :starting_action
 
     def initialize(actions, bot, name = "")
-      @actions = actions
+      self.actions = actions
       @bot = bot
       @name = name
       @history = nil
