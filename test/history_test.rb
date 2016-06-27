@@ -33,4 +33,14 @@ class HistoryTest < Minitest::Test
     assert_equal "Test", hist.action_name
     assert hist.start_time
   end
+
+  def test_parse_status
+    hist = History.new
+    assert_raises(History::InvalidStatus) { hist.status = WebMinion }
+    assert_raises(History::InvalidStatus) { hist.status = "NOOOOOO" }
+    hist.status = true
+    assert_equal "Successful", hist.status
+    hist.status = "skipped"
+    assert_equal "Skipped", hist.status
+  end
 end
