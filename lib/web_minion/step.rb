@@ -8,11 +8,6 @@ module WebMinion
     attr_accessor :name, :target, :method, :value, :is_validator, :retain_element
 
     VALID_METHODS = {
-      get: {
-        form: :get_form,
-        form_in_index: :get_form_in_index,
-        field: :get_field
-      },
       select: [
         :field,
         :radio_button,
@@ -20,6 +15,8 @@ module WebMinion
         :checkbox
       ],
       main_methods: [
+        :get_field,
+        :get_form,
         :go,
         :select,
         :click,
@@ -35,7 +32,7 @@ module WebMinion
 
     def initialize(fields = {})
       fields.each_pair do |k, v|
-        if valid_method?(k)
+        if valid_method?(k.to_sym)
           send("method=", k)
           @target = v
         else

@@ -14,7 +14,7 @@ class StepTest < Minitest::Test
 
   def test_can_take_action_to_target
     test_map = {
-      "get/form" => "xpath",
+      "get_form" => "xpath",
       "is_validator" => true
     }
 

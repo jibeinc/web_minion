@@ -11,9 +11,9 @@ class ActionTest < Minitest::Test
     @step_one = Step.new(name: "Get Page", target: @select_test_file,
                          method: :go, value: nil, is_validator: false)
     @step_two = Step.new(name: "Get form", target: { id: "form_id" },
-                         value: nil, is_validator: false, method: :"get/form")
+                         value: nil, is_validator: false, method: :get_form)
     @step_three = Step.new(name: "Get field", target: { name: "select_id" },
-                           value: nil, is_validator: false, method: :"get/field")
+                           value: nil, is_validator: false, method: :get_field)
     @validate_one = Step.new(name: "Check select", target: nil, value: "110",
                              method: :value_equals, is_validator: true)
   end
