@@ -1,5 +1,6 @@
 require "mechanize"
 require "web_minion/bots/bot"
+require "web_minion/bots/elements/form_element"
 
 class MultipleOptionsFoundError < StandardError; end
 class NoInputFound < StandardError; end
@@ -39,13 +40,8 @@ module WebMinion
 
     ## FORM METHODS ##
     # Must have an element passed to them (except get form)
-
-    def get_form_in_index(target, _value, _element)
-      @bot.page.forms[target]
-    end
-
     def get_form(target, _value, _element)
-      @bot.page.form_with(target)
+      FormElement.new(@bot, target, nil, nil).get
     end
 
     def get_field(target, _value, element)
