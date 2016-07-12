@@ -15,13 +15,14 @@ module WebMinion
 
     attr_accessor :actions, :bot, :history
     attr_writer :name
-    attr_reader :curr_action, :starting_action
+    attr_reader :curr_action, :starting_action, :saved_values
 
     def initialize(actions, bot, name = "")
       @actions = actions
       @bot = bot
       @name = name
       @history = nil
+      @saved_values = {}
     end
 
     def self.build_via_json(rule_json)
@@ -56,7 +57,7 @@ module WebMinion
 
     def perform
       @history = FlowHistory.new
-      status = execute_action(@starting_action)
+      status = execute_action(@starting_action, @saved_values)
       @history.end_time = Time.now
       @history.status = status
       @history
@@ -64,15 +65,15 @@ module WebMinion
 
     private
 
-    def execute_action(action)
+    def execute_action(action, saved_values = {})
       @curr_action = action
       @history.action_history << ActionHistory.new(action.name, action.key)
-      status = action.perform(@bot)
+      status = action.perform(@bot, saved_values)
       update_action_history(status)
       if status
-        action.ending_action? ? true : execute_action(action.on_success)
+        action.ending_action? ? true : execute_action(action.on_success, saved_values)
       else
-        action.on_failure ? execute_action(action.on_failure) : false
+        action.on_failure ? execute_action(action.on_failure, saved_values) : false
       end
     end
 

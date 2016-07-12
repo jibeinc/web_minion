@@ -6,6 +6,7 @@ module WebMinion
   # operation on an element that has already been found.
   class Step
     attr_accessor :name, :target, :method, :value, :is_validator, :retain_element
+    attr_reader :saved_values
 
     VALID_METHODS = {
       select: [
@@ -26,7 +27,8 @@ module WebMinion
         :url_equals,
         :value_equals,
         :body_includes,
-        :save_page_html
+        :save_page_html,
+        :save_value
       ]
     }.freeze
 
@@ -41,8 +43,8 @@ module WebMinion
       end
     end
 
-    def perform(bot, element = nil)
-      bot.execute_step(@method, @target, @value, element)
+    def perform(bot, element = nil, saved_values)
+      bot.execute_step(@method, @target, @value, element, saved_values)
     end
 
     def method=(method)

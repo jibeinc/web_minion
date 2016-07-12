@@ -38,6 +38,11 @@ module WebMinion
       write_html_file(value)
     end
 
+    def save_value(target, value, _element, val_hash)
+      element = @bot.page.at(target)
+      val_hash[value.to_sym] = element if element
+    end
+
     ## FORM METHODS ##
     # Must have an element passed to them (except get form)
     def get_form(target, _value, _element)

@@ -50,16 +50,16 @@ module WebMinion
     end
 
     # Again, boilerplate for initial setup
-    def perform(bot)
+    def perform(bot, saved_values)
       element = nil
       status = @steps.map do |step|
         if step.validator?
-          step.perform(bot, element)
+          step.perform(bot, element, saved_values)
         else
           if step.retain?
-            step.perform(bot, element)
+            step.perform(bot, element, saved_values)
           else
-            element = step.perform(bot, element)
+            element = step.perform(bot, element, saved_values)
           end
           nil
         end

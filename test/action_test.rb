@@ -23,7 +23,7 @@ class ActionTest < Minitest::Test
                         steps: [
                           @step_one, @step_two, @step_three, @validate_one
                         ])
-    assert action.perform(@bot)
+    assert action.perform(@bot, {})
   end
 
   def test_no_validation_throws_warning
