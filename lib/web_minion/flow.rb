@@ -33,6 +33,7 @@ module WebMinion
 
     def self.build_from_hash(fields = {})
       flow = new([], nil, nil)
+      flow.vars = fields[:vars] if fields[:vars]
       fields.each_pair do |k, v|
         flow.send("#{k}=", v)
       end
@@ -42,7 +43,7 @@ module WebMinion
     def actions=(actions)
       @actions = {}
       actions.each do |act|
-        action = Action.build_from_hash(act, vars)
+        action = Action.build_from_hash(act, @vars)
         @actions[action.key] = action
         @starting_action = action if action.starting_action?
       end

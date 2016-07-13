@@ -1,12 +1,12 @@
 module WebMinion
   class InvalidMethodError < StandardError; end
-
+  class NoValueForVariableError < StandardError; end
   # A Step represents the individual operation that the bot will perform. This
   # often includes grabbing an element from the DOM tree, or performing some
   # operation on an element that has already been found.
   class Step
-    attr_accessor :name, :target, :method, :value, :is_validator, :retain_element, :vars
-    attr_reader :saved_values
+    attr_accessor :name, :target, :method, :value, :is_validator, :retain_element
+    attr_reader :saved_values, :vars
 
     VALID_METHODS = {
       select: [
@@ -41,7 +41,13 @@ module WebMinion
           send("#{k}=", v)
         end
       end
+
+      replace_all_variables
     end
+
+    def vars=(vars)
+      @vars = Hash[vars.collect{|k,v| [k.to_s, v]}] 
+    end 
 
     def perform(bot, element = nil, saved_values)
       bot.execute_step(@method, @target, @value, element, saved_values)
@@ -67,6 +73,18 @@ module WebMinion
         return true unless VALID_METHODS[split[0]][split[1]].nil?
       end
       VALID_METHODS[:main_methods].include?(method)
+    end
+  
+    private
+
+    def replace_all_variables
+      %w(value target).each do |field|
+        return if send(field).nil?
+        if replace_var = send(field).match(/@(\D+)/)
+          raise(NoValueForVariableError, "no variable to use found for #{replace_var}") unless @vars[replace_var[1]]
+          send("#{field}=", @vars[replace_var[1]])
+        end
+      end  
     end
   end
 end

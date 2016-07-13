@@ -46,5 +46,11 @@ class FlowTest < Minitest::Test
     flow = Flow.build_via_json(@json_five)
     flow.perform
     assert flow.saved_values[:saved_value]
+  end 
+
+  def test_dynamic_value_set_works
+    json = json_read("variable_usage.json")
+    flow = Flow.build_via_json(json, { save_value: 'new_value' })
+    assert_equal 'new_value', flow.actions[1].steps[1].target
   end
 end
