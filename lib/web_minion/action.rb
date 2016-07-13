@@ -16,8 +16,8 @@ module WebMinion
       send("steps=", fields[:steps])
     end
 
-    def self.build_from_hash(fields = {})
-      steps = fields["steps"].map { |step| Step.new(step) }
+    def self.build_from_hash(fields = {}, vars = {})
+      steps = fields["steps"].map { |step| Step.new(step.merge(vars: vars)) }
       starting = (fields["starting"] || "false") == "false" ? false : true
       new(name: fields["name"], steps: steps, key: fields["key"],
           starting: starting, on_success: fields["on_success"],

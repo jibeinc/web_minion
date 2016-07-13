@@ -13,22 +13,22 @@ module WebMinion
     class NoStartingActionError < StandardError; end
     class CyclicalFlowError < StandardError; end
 
-    attr_accessor :actions, :bot, :history
-    attr_writer :name
+    attr_accessor :actions, :bot, :history, :name, :vars
     attr_reader :curr_action, :starting_action, :saved_values
 
-    def initialize(actions, bot, name = "")
+    def initialize(actions, bot, vars = {}, name = "")
       @actions = actions
       @bot = bot
       @name = name
+      @vars = vars
       @history = nil
       @saved_values = {}
     end
 
-    def self.build_via_json(rule_json)
+    def self.build_via_json(rule_json, vars = {})
       ruleset = JSON.parse(rule_json)
       bot = MechanizeBot.new(ruleset["config"])
-      build_from_hash(ruleset["flow"].merge(bot: bot))
+      build_from_hash(ruleset["flow"].merge(bot: bot, vars: vars))
     end
 
     def self.build_from_hash(fields = {})
@@ -42,7 +42,7 @@ module WebMinion
     def actions=(actions)
       @actions = {}
       actions.each do |act|
-        action = Action.build_from_hash(act)
+        action = Action.build_from_hash(act, vars)
         @actions[action.key] = action
         @starting_action = action if action.starting_action?
       end

@@ -1,3 +1,5 @@
+cl_testing_html.html
+*.swo
 *.swp
 /.bundle/
 /.yardoc
