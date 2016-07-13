@@ -56,7 +56,7 @@ module WebMinion
     def method=(method)
       raise(InvalidMethodError, "Method: #{method} is not valid") unless valid_method?(method.to_sym)
       split = method.to_s.split("/").map(&:to_sym)
-      @method = split.count > 1 ? VALID_METHODS[split[0]][split[1]] : method.to_sym
+      @method = split.count > 1 ? "#{VALID_METHODS[split[0]]}_#{split[1]}".to_sym : method.to_sym
     end
 
     def retain?
@@ -70,7 +70,7 @@ module WebMinion
     def valid_method?(method)
       split = method.to_s.split("/").map(&:to_sym)
       if split.count > 1
-        return true unless VALID_METHODS[split[0]][split[1]].nil?
+        return true if VALID_METHODS[split[0]].include?(split[1])
       end
       VALID_METHODS[:main_methods].include?(method)
     end
@@ -79,7 +79,9 @@ module WebMinion
 
     def replace_all_variables
       %w(value target).each do |field|
-        return if send(field).nil?
+        return if send(field).nil? || !send(field).is_a?(String)
+        # Need to be able to handle email addressed
+        return if send(field).match(/\w+@\D+\.\D+/)
         if replace_var = send(field).match(/@(\D+)/)
           raise(NoValueForVariableError, "no variable to use found for #{replace_var}") unless @vars[replace_var[1]]
           send("#{field}=", @vars[replace_var[1]])
