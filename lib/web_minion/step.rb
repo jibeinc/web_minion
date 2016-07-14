@@ -56,7 +56,7 @@ module WebMinion
     def method=(method)
       raise(InvalidMethodError, "Method: #{method} is not valid") unless valid_method?(method.to_sym)
       split = method.to_s.split("/").map(&:to_sym)
-      @method = split.count > 1 ? "#{VALID_METHODS[split[0]]}_#{split[1]}".to_sym : method.to_sym
+      @method = split.count > 1 ? "#{split[0]}_#{split[1]}".to_sym : method.to_sym
     end
 
     def retain?
@@ -88,6 +88,7 @@ module WebMinion
       if var.is_a?(Hash)
         return handle_hash_replacement(var)
       else
+        return var unless var.is_a?(String)
         # This will handle email addresses
         return var if var.match(/\w+@\D+\.\D+/)
         if replace_var = var.match(/@(\D+)/)
