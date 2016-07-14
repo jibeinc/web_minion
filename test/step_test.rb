@@ -20,4 +20,9 @@ class StepTest < Minitest::Test
 
     assert_equal "xpath", Step.new(test_map).target
   end
+
+  def test_variable_replacement
+    step = Step.new(value: '@replace', vars: { replace: 'new_value' }) 
+    assert_equal 'new_value', step.value
+  end
 end

@@ -79,14 +79,29 @@ module WebMinion
 
     def replace_all_variables
       %w(value target).each do |field|
-        return if send(field).nil? || !send(field).is_a?(String)
-        # Need to be able to handle email addressed
-        return if send(field).match(/\w+@\D+\.\D+/)
-        if replace_var = send(field).match(/@(\D+)/)
-          raise(NoValueForVariableError, "no variable to use found for #{replace_var}") unless @vars[replace_var[1]]
-          send("#{field}=", @vars[replace_var[1]])
-        end
+        return if send(field).nil?
+        send("#{field}=", replace_variable(send(field)))
       end  
+    end
+
+    def replace_variable(var)
+      if var.is_a?(Hash)
+        return handle_hash_replacement(var)
+      else
+        # This will handle email addresses
+        return var if var.match(/\w+@\D+\.\D+/)
+        if replace_var = var.match(/@(\D+)/)
+          raise(NoValueForVariableError, "no variable to use found for #{replace_var}") unless @vars[replace_var[1]]
+          return @vars[replace_var[1]]
+        end
+      end
+    end
+
+    def handle_hash_replacement(hash)
+      hash.each_pair do |k, v|
+        hash[k] = replace_variable(v)
+      end
+      hash
     end
   end
 end
