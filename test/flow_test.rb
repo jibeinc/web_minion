@@ -44,6 +44,7 @@ class FlowTest < Minitest::Test
 
   def test_saved_values_returned_properly
     flow = Flow.build_via_json(@json_five)
+    flow.actions[1].steps[0].target = "file://#{Dir.pwd}/test/test_html/full_flow_test/first_page.html"
     flow.perform
     assert flow.saved_values[:saved_value]
   end 
