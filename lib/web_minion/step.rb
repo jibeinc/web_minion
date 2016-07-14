@@ -92,9 +92,10 @@ module WebMinion
         return var if var.match(/\w+@\D+\.\D+/)
         if replace_var = var.match(/@(\D+)/)
           raise(NoValueForVariableError, "no variable to use found for #{replace_var}") unless @vars[replace_var[1]]
-          return @vars[replace_var[1]]
+          var = @vars[replace_var[1]]
         end
       end
+      var
     end
 
     def handle_hash_replacement(hash)

@@ -1,6 +1,7 @@
 require "test_helper"
 require "web_minion/step"
 require "web_minion/action"
+require "web_minion/bots/mechanize_bot"
 
 class ActionTest < Minitest::Test
   include WebMinion
