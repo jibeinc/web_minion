@@ -79,7 +79,7 @@ module WebMinion
 
     def replace_all_variables
       %w(value target).each do |field|
-        return if send(field).nil?
+        next if send(field).nil?
         send("#{field}=", replace_variable(send(field)))
       end  
     end
