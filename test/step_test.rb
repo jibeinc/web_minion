@@ -29,4 +29,9 @@ class StepTest < Minitest::Test
     step = Step.new(target: { name: { key: '@replace' } }, vars: { replace: 'new_value' })
     assert_equal 'new_value', step.target[:name][:key]
   end
+
+  def test_variable_replacement_to_array
+    step = Step.new(value: '@replace', vars: { replace: ['value_one', 'value_two'] })
+    assert_equal ['value_one', 'value_two'], step.value
+  end
 end

@@ -39,8 +39,12 @@ module WebMinion
     end
 
     def save_value(target, value, _element, val_hash)
-      element = @bot.page.at(target)
-      val_hash[value.to_sym] = element if element
+      element = @bot.page.search(target)
+      if val_hash[value.to_sym]
+        val_hash[value.to_sym] << element if element
+      else
+        val_hash[value.to_sym] = element if element
+      end
     end
 
     ## FORM METHODS ##
@@ -72,7 +76,11 @@ module WebMinion
     end
 
     def select_checkbox(target, _value, element)
-      element.checkbox_with(target).check
+      if target.is_a?(Array)
+        target.each { |tar| select_checkbox(tar, nil, element) }
+      else
+        element.checkbox_with(target).check
+      end
     end
 
     def select_radio_button(target, _value, element)
