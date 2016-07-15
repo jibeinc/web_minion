@@ -9,6 +9,7 @@ class MechanizeBotTest < Minitest::Test
     @select_test_file = "file://#{Dir.pwd}/test/test_html/select_test.html"
     @radio_test_file = "file://#{Dir.pwd}/test/test_html/radio_button_test.html"
     @input_test_file = "file://#{Dir.pwd}/test/test_html/input_test.html"
+    @checkbox_test_file = "file://#{Dir.pwd}/test/test_html/checkbox_test.html"
   end
 
   def test_body_includes
@@ -46,6 +47,18 @@ class MechanizeBotTest < Minitest::Test
                              "//*[@id='select_id']",
                              "120",
                              field)
+  end
+
+  def test_checking_multiple_values
+    @bot.execute_step(:go, @checkbox_test_file)
+    form = @bot.execute_step(:get_form, id: "form_id")
+    @bot.execute_step(:select_checkbox, [ { value: '110' }, { value: '120' }], nil, form)
+    val_hash = {}
+    @bot.save_value('//input', 'checkboxes', nil, val_hash)
+    assert val_hash[:checkboxes]
+    assert @bot.page.forms[0].checkboxes[0].checked?
+    assert @bot.page.forms[0].checkboxes[1].checked?
+    refute @bot.page.forms[0].checkboxes[2].checked?
   end
 
   def test_radio_button_select_method

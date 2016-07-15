@@ -1,0 +1,36 @@
+{
+  "config": {},
+  "flow": {
+    "name": "Test that saving values works",
+    "actions": [
+      {
+        "name": "Action one",
+        "key": 1,
+        "starting": true,
+        "steps": [
+          {
+            "name": "Step one",
+            "target": "file:///Users/andrewparrish/Documents/Development/Tasks/Post/jibe_ruleset_bot/test/test_html/full_flow_test/first_page.html",
+            "value": "",
+            "method": "go",
+            "is_validator": false
+          },
+          {
+            "name": "Save value",
+            "target":"@save_value",
+            "value":"saved_value",
+            "method":"save_value",
+            "is_validator": false
+          },
+          {
+            "name": "Validator",
+            "target": "",
+            "value": "Test",
+            "method": "body_includes",
+            "is_validator": true
+          }
+        ]
+      }
+    ]
+  }
+}

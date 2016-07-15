@@ -9,10 +9,11 @@ class FlowTest < Minitest::Test
 
   def setup
     json_folder = "/test/test_json/"
-    @json = File.read("#{Dir.pwd}#{json_folder}test_json_one.json")
-    @json_two = File.read("#{Dir.pwd}#{json_folder}no_start.json")
-    @json_three = File.read("#{Dir.pwd}#{json_folder}test_set_next.json")
-    @json_four = File.read("#{Dir.pwd}#{json_folder}infinite_cycle_flow.json")
+    @json = json_read("test_json_one.json")
+    @json_two = json_read("no_start.json")
+    @json_three = json_read("test_set_next.json")
+    @json_four = json_read("infinite_cycle_flow.json")
+    @json_five = json_read("test_saved_values.json")
     @flow = Flow.build_via_json(@json)
   end
 
@@ -39,5 +40,18 @@ class FlowTest < Minitest::Test
     assert flow.actions[1].on_success.is_a? Action
     assert flow.actions[1].on_failure.nil?
     assert_equal [Action], flow.actions[1].next_actions.map(&:class)
+  end
+
+  def test_saved_values_returned_properly
+    flow = Flow.build_via_json(@json_five)
+    flow.actions[1].steps[0].target = "file://#{Dir.pwd}/test/test_html/full_flow_test/first_page.html"
+    flow.perform
+    assert flow.saved_values[:saved_value]
+  end 
+
+  def test_dynamic_value_set_works
+    json = json_read("variable_usage.json")
+    flow = Flow.build_via_json(json, { save_value: 'new_value' })
+    assert_equal 'new_value', flow.actions[1].steps[1].target
   end
 end

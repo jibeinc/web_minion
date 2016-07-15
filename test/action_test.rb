@@ -1,6 +1,7 @@
 require "test_helper"
 require "web_minion/step"
 require "web_minion/action"
+require "web_minion/bots/mechanize_bot"
 
 class ActionTest < Minitest::Test
   include WebMinion
@@ -23,7 +24,7 @@ class ActionTest < Minitest::Test
                         steps: [
                           @step_one, @step_two, @step_three, @validate_one
                         ])
-    assert action.perform(@bot)
+    assert action.perform(@bot, {})
   end
 
   def test_no_validation_throws_warning

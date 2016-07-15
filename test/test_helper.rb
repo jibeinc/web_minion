@@ -16,3 +16,16 @@ require "minitest/unit"
 require "minitest/reporters"
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new,
                           Minitest::Reporters::SpecReporter.new]
+module Minitest
+  class Test
+    def json_read(file)
+      File.read("./test/test_json/#{file}") 
+    end
+
+    def html_read(file)
+      File.read("./test/test_html/#{file}")
+    end
+  end
+end
+
+

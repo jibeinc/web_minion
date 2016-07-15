@@ -20,4 +20,24 @@ class StepTest < Minitest::Test
 
     assert_equal "xpath", Step.new(test_map).target
   end
+
+  def test_shortened_method_name_validation
+    step = Step.new
+    step.method = "select/field"
+    assert_equal :select_field, step.method
+  end
+
+  def test_variable_replacement
+    step = Step.new(value: '@replace', vars: { replace: 'new_value' }) 
+    assert_equal 'new_value', step.value
+    step = Step.new(target: { name: '@replace' }, vars: { replace: 'new_value' })
+    assert_equal 'new_value', step.target[:name]
+    step = Step.new(target: { name: { key: '@replace' } }, vars: { replace: 'new_value' })
+    assert_equal 'new_value', step.target[:name][:key]
+  end
+
+  def test_variable_replacement_to_array
+    step = Step.new(value: '@replace', vars: { replace: ['value_one', 'value_two'] })
+    assert_equal ['value_one', 'value_two'], step.value
+  end
 end

@@ -7,8 +7,12 @@ module WebMinion
       @config = config
     end
 
-    def execute_step(method, target, value = nil, element = nil)
-      method(method).call(target, value, element)
+    def execute_step(method, target, value = nil, element = nil, values_hash = {})
+      if method == :save_value
+        method(method).call(target, value, element, values_hash)
+      else
+        method(method).call(target, value, element)
+      end
     end
   end
 end

@@ -13,25 +13,27 @@ module WebMinion
     class NoStartingActionError < StandardError; end
     class CyclicalFlowError < StandardError; end
 
-    attr_accessor :actions, :bot, :history
-    attr_writer :name
-    attr_reader :curr_action, :starting_action
+    attr_accessor :actions, :bot, :history, :name, :vars
+    attr_reader :curr_action, :starting_action, :saved_values
 
-    def initialize(actions, bot, name = "")
+    def initialize(actions, bot, vars = {}, name = "")
       @actions = actions
       @bot = bot
       @name = name
+      @vars = vars
       @history = nil
+      @saved_values = {}
     end
 
-    def self.build_via_json(rule_json)
+    def self.build_via_json(rule_json, vars = {})
       ruleset = JSON.parse(rule_json)
       bot = MechanizeBot.new(ruleset["config"])
-      build_from_hash(ruleset["flow"].merge(bot: bot))
+      build_from_hash(ruleset["flow"].merge(bot: bot, vars: vars))
     end
 
     def self.build_from_hash(fields = {})
       flow = new([], nil, nil)
+      flow.vars = fields[:vars] if fields[:vars]
       fields.each_pair do |k, v|
         flow.send("#{k}=", v)
       end
@@ -41,7 +43,7 @@ module WebMinion
     def actions=(actions)
       @actions = {}
       actions.each do |act|
-        action = Action.build_from_hash(act)
+        action = Action.build_from_hash(act, @vars)
         @actions[action.key] = action
         @starting_action = action if action.starting_action?
       end
@@ -56,7 +58,7 @@ module WebMinion
 
     def perform
       @history = FlowHistory.new
-      status = execute_action(@starting_action)
+      status = execute_action(@starting_action, @saved_values)
       @history.end_time = Time.now
       @history.status = status
       @history
@@ -64,15 +66,15 @@ module WebMinion
 
     private
 
-    def execute_action(action)
+    def execute_action(action, saved_values = {})
       @curr_action = action
       @history.action_history << ActionHistory.new(action.name, action.key)
-      status = action.perform(@bot)
+      status = action.perform(@bot, saved_values)
       update_action_history(status)
       if status
-        action.ending_action? ? true : execute_action(action.on_success)
+        action.ending_action? ? true : execute_action(action.on_success, saved_values)
       else
-        action.on_failure ? execute_action(action.on_failure) : false
+        action.on_failure ? execute_action(action.on_failure, saved_values) : false
       end
     end
 
