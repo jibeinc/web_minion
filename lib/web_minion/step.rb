@@ -16,6 +16,7 @@ module WebMinion
         :checkbox
       ],
       main_methods: [
+        :set_file_upload,
         :get_field,
         :get_form,
         :go,
