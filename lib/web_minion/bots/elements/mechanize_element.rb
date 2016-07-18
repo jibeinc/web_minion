@@ -16,7 +16,12 @@ class MechanizeElement
   def determine_target_type(target)
     if target.is_a? Integer
       return :index
+    else
+      if %w(first last).include?(target)
+        return :first_last
+      end
+
+      :string_path
     end
-    :string_path
   end
 end

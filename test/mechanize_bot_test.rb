@@ -10,6 +10,7 @@ class MechanizeBotTest < Minitest::Test
     @radio_test_file = "file://#{Dir.pwd}/test/test_html/radio_button_test.html"
     @input_test_file = "file://#{Dir.pwd}/test/test_html/input_test.html"
     @checkbox_test_file = "file://#{Dir.pwd}/test/test_html/checkbox_test.html"
+    @multiple_form_file = "file://#{Dir.pwd}/test/test_html/multiple_forms_test.html"
   end
 
   def test_body_includes
@@ -90,5 +91,14 @@ class MechanizeBotTest < Minitest::Test
     @bot.execute_step(:save_page_html, nil, file_path, nil)
     assert File.exist? file_path
     File.delete(file_path) if File.exist? file_path
+  end
+
+  def test_first_last_form_select
+    @bot.execute_step(:go, @multiple_form_file)
+    form = @bot.execute_step(:get_form, "first")
+    assert_equal 'form_one', form.dom_id
+
+    form_two = @bot.execute_step(:get_form, "last")
+    assert_equal 'form_two', form_two.dom_id
   end
 end
