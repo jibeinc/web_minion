@@ -111,8 +111,8 @@ module WebMinion
         val_check_arr = []
         value.each do |val|
           val_check_arr << !!(body.index(val) && body.index(val) > 0)
-          val_check_arr.uniq.include?(true)
         end
+        val_check_arr.uniq.include?(true)
       else
         !!(body.index(value) && body.index(value) > 0)
       end
