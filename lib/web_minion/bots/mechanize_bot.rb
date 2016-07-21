@@ -1,6 +1,7 @@
 require "mechanize"
 require "web_minion/bots/bot"
 require "web_minion/bots/elements/form_element"
+require "web_minion/bots/elements/file_upload_element"
 
 class MultipleOptionsFoundError < StandardError; end
 class NoInputFound < StandardError; end
@@ -32,6 +33,10 @@ module WebMinion
 
     def click_button_in_form(target, _value, element)
       element.button_with(target).click
+    end
+
+    def set_file_upload(target, value, element)
+      FileUploadElement.new(@bot, target, value, element).set_file
     end
 
     def save_page_html(_target, value, _element)
@@ -102,7 +107,15 @@ module WebMinion
     end
 
     def body_includes(_target, value, _element)
-      !!(body.index(value) && body.index(value) > 0)
+      if value.is_a?(Array)
+        val_check_arr = []
+        value.each do |val|
+          val_check_arr << !!(body.index(val) && body.index(val) > 0)
+          val_check_arr.uniq.include?(true)
+        end
+      else
+        !!(body.index(value) && body.index(value) > 0)
+      end
     end
 
     def value_equals(_target, value, element)
@@ -116,3 +129,5 @@ module WebMinion
     end
   end
 end
+
+

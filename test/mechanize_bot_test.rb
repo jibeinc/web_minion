@@ -17,6 +17,13 @@ class MechanizeBotTest < Minitest::Test
     assert @bot.execute_step(:body_includes, nil, "Hacker News")
   end
 
+  def test_body_multi_includes
+    body_file = "file://#{Dir.pwd}/test/test_html/body_text_test.html" 
+    @bot.execute_step(:go, body_file)
+    assert @bot.execute_step(:body_includes, nil, ["Test Two", "Nothing"])
+    refute @bot.execute_step(:body_includes, nil, ["Nothing", "Here"])
+  end
+
   def test_get_form
     @bot.execute_step(:go, @select_test_file)
     assert @bot.execute_step(:get_form, id: "form_id")
