@@ -40,4 +40,8 @@ class StepTest < Minitest::Test
     step = Step.new(value: '@replace', vars: { replace: ['value_one', 'value_two'] })
     assert_equal ['value_one', 'value_two'], step.value
   end
+
+  def test_raises_error_for_no_variable
+    assert_raises(WebMinion::NoValueForVariableError) { Step.new(value: '@replace', vars: {}) }
+  end
 end

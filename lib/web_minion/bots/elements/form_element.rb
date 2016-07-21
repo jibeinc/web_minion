@@ -11,12 +11,24 @@ class FormElement < MechanizeElement
       index_get
     when :string_path
       string_get
+    when :first_last
+      first_last_get
     else
       raise(InvalidTargetType, "#{@target_type} is not valid!")
     end
   end
 
   private
+
+  def first_last_get
+    if @target == "first"
+      @bot.page.forms.first 
+    elsif @target == "last"
+      @bot.page.forms.last
+    else
+      raise(InvalidTargetType, "#{@target} is not first or last!")
+    end
+  end
 
   def index_get
     @bot.page.forms[@target]
