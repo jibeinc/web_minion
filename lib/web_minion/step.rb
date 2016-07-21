@@ -5,7 +5,7 @@ module WebMinion
   # often includes grabbing an element from the DOM tree, or performing some
   # operation on an element that has already been found.
   class Step
-    attr_accessor :name, :target, :method, :value, :is_validator, :retain_element
+    attr_accessor :name, :target, :method, :value, :is_validator, :retain_element, :skippable
     attr_reader :saved_values, :vars
 
     VALID_METHODS = {
@@ -16,6 +16,7 @@ module WebMinion
         :checkbox
       ],
       main_methods: [
+        :set_file_upload,
         :get_field,
         :get_form,
         :go,
