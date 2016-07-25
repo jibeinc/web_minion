@@ -1,3 +1,4 @@
+*.DS_Store
 cl_tester.rb
 completer.hist
 cl_testing_html.html
