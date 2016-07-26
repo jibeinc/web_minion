@@ -61,10 +61,17 @@ module WebMinion
       status = execute_action(@starting_action, @saved_values)
       @history.end_time = Time.now
       @history.status = status
-      @history
+      results
     end
 
     private
+
+    def results
+      {
+        history: @history,
+        saved_vars: @saved_vars
+      }
+    end
 
     def execute_action(action, saved_values = {})
       @curr_action = action
