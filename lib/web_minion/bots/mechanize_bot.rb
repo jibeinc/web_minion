@@ -2,7 +2,6 @@ require "mechanize"
 require "web_minion/bots/bot"
 require "web_minion/bots/elements/form_element"
 require "web_minion/bots/elements/file_upload_element"
-require 'pry'
 
 class MultipleOptionsFoundError < StandardError; end
 class NoInputFound < StandardError; end
