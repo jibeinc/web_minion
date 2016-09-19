@@ -2,6 +2,7 @@ require "mechanize"
 require "web_minion/bots/bot"
 require "web_minion/bots/elements/form_element"
 require "web_minion/bots/elements/file_upload_element"
+require 'pry'
 
 class MultipleOptionsFoundError < StandardError; end
 class NoInputFound < StandardError; end
@@ -39,7 +40,16 @@ module WebMinion
       FileUploadElement.new(@bot, target, value, element).set_file
     end
 
+    # ability to save dynamic dates in the filename with string "INSERT_DATE"
+    # so a value of "myfilename-INSERT_DATE.html" will look like this:
+    # "myfilename-2016-09-19_18-51-40.html"
+    # if you want multiple steps saving at the same time without overwriting,
+    # rename save_html step in your json (i.e. 'save_html_confirmation' etc)
     def save_page_html(_target, value, _element)
+      if value.include?("INSERT_DATE")
+        time = "#{Time.now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        value = value.split("INSERT_DATE").insert(1, time).join
+      end
       write_html_file(value)
     end
 
