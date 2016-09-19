@@ -46,7 +46,7 @@ module WebMinion
     # rename save_html step in your json (i.e. 'save_html_confirmation' etc)
     def save_page_html(_target, value, _element)
       if value.include?("INSERT_DATE")
-        time = "#{Time.now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        time = Time.now.strftime('%Y-%m-%d_%H-%M-%S').to_s
         value = value.split("INSERT_DATE").insert(1, time).join
       end
       write_html_file(value)

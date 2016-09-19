@@ -105,7 +105,7 @@ class MechanizeBotTest < Minitest::Test
     file_path = "#{Dir.pwd}/test/test_html-INSERT_DATE.html"
     @bot.execute_step(:go, @input_test_file)
     @bot.execute_step(:save_page_html, nil, file_path, nil)
-    new_file_path = Dir::glob("#{Dir.pwd}/test/test_html-*.html").first
+    new_file_path = Dir.glob("#{Dir.pwd}/test/test_html-*.html").first
     assert File.exist? new_file_path
     refute new_file_path == file_path
     File.delete(new_file_path) if File.exist? new_file_path
