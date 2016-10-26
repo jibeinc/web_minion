@@ -20,7 +20,7 @@ class MechanizeBotTest < Minitest::Test
   end
 
   def test_body_multi_includes
-    body_file = "file://#{Dir.pwd}/test/test_html/body_text_test.html" 
+    body_file = "file://#{Dir.pwd}/test/test_html/body_text_test.html"
     @bot.execute_step(:go, body_file)
     assert @bot.execute_step(:body_includes, nil, ["Test Two", "Nothing"])
     refute @bot.execute_step(:body_includes, nil, ["Nothing", "Here"])

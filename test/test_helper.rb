@@ -19,7 +19,7 @@ Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new,
 module Minitest
   class Test
     def json_read(file)
-      File.read("./test/test_json/#{file}") 
+      File.read("./test/test_json/#{file}")
     end
 
     def html_read(file)
@@ -27,5 +27,3 @@ module Minitest
     end
   end
 end
-
-

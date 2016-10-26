@@ -4,7 +4,7 @@ require "web_minion/bots/mechanize_bot"
 
 class ElementTest < Minitest::Test
   include WebMinion
-  
+
   def setup
     @bot = MechanizeBot.new
   end

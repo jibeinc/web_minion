@@ -23,7 +23,7 @@ class FileUploadElement < MechanizeElement
   def index_set
     @element.file_uploads[@target].file_name = @value
   end
-  
+
   def string_set
     @element.file_upload_with(@target).file_name = @value
   end

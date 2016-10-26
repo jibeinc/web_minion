@@ -8,7 +8,6 @@ class FlowTest < Minitest::Test
   include WebMinion
 
   def setup
-    json_folder = "/test/test_json/"
     @json = json_read("test_json_one.json")
     @json_two = json_read("no_start.json")
     @json_three = json_read("test_set_next.json")
@@ -47,7 +46,7 @@ class FlowTest < Minitest::Test
     flow.actions[1].steps[0].target = "file://#{Dir.pwd}/test/test_html/full_flow_test/first_page.html"
     flow.perform
     assert flow.saved_values[:saved_value]
-  end 
+  end
 
   def test_dynamic_value_set_works
     json = json_read("variable_usage.json")
