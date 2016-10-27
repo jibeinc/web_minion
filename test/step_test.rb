@@ -28,20 +28,20 @@ class StepTest < Minitest::Test
   end
 
   def test_variable_replacement
-    step = Step.new(value: '@replace', vars: { replace: 'new_value' })
-    assert_equal 'new_value', step.value
-    step = Step.new(target: { name: '@replace' }, vars: { replace: 'new_value' })
-    assert_equal 'new_value', step.target[:name]
-    step = Step.new(target: { name: { key: '@replace' } }, vars: { replace: 'new_value' })
-    assert_equal 'new_value', step.target[:name][:key]
+    step = Step.new(value: "@replace", vars: { replace: "new_value" })
+    assert_equal "new_value", step.value
+    step = Step.new(target: { name: "@replace" }, vars: { replace: "new_value" })
+    assert_equal "new_value", step.target[:name]
+    step = Step.new(target: { name: { key: "@replace" } }, vars: { replace: "new_value" })
+    assert_equal "new_value", step.target[:name][:key]
   end
 
   def test_variable_replacement_to_array
-    step = Step.new(value: '@replace', vars: { replace: ['value_one', 'value_two'] })
-    assert_equal ['value_one', 'value_two'], step.value
+    step = Step.new(value: "@replace", vars: { replace: ["value_one", "value_two"] })
+    assert_equal ["value_one", "value_two"], step.value
   end
 
   def test_raises_error_for_no_variable
-    assert_raises(WebMinion::NoValueForVariableError) { Step.new(value: '@replace', vars: {}) }
+    assert_raises(WebMinion::NoValueForVariableError) { Step.new(value: "@replace", vars: {}) }
   end
 end

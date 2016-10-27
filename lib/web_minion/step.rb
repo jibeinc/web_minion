@@ -47,7 +47,7 @@ module WebMinion
     end
 
     def vars=(vars)
-      @vars = Hash[vars.collect{|k,v| [k.to_s, v]}]
+      @vars = Hash[vars.collect{ |k, v| [k.to_s, v] }]
     end
 
     def perform(bot, element = nil, saved_values)

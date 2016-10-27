@@ -48,7 +48,7 @@ class ActionTest < Minitest::Test
 
   def test_building_action_with_skippable_steps
     action = Action.build_from_hash(
-      "steps" => [{ value: '@replace', "skippable" => true },
+      "steps" => [{ value: "@replace", "skippable" => true },
                   { "is_validator" => true }],
       "starting" => "true"
     )
@@ -56,8 +56,8 @@ class ActionTest < Minitest::Test
 
     assert_raises(WebMinion::NoValueForVariableError) do
       Action.build_from_hash(
-        "steps" => [ { value: '@replace', 'skippable' => true,
-                       'is_validator' => true }]
+        "steps" => [{ value: "@replace", "skippable" => true,
+                      "is_validator" => true }]
       )
     end
   end
