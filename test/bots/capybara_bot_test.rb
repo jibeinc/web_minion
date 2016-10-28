@@ -28,20 +28,17 @@ class CapybaraBotTest < Minitest::Test
   end
 
   def test_get_form
-    skip
     @bot.execute_step(:go, @select_test_file)
     assert @bot.execute_step(:get_form, id: "form_id")
   end
 
   def test_get_field
-    skip
     @bot.execute_step(:go, @select_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     assert @bot.execute_step(:get_field, { name: "select_id" }, nil, form)
   end
 
   def test_value_validation_method
-    skip
     @bot.execute_step(:go, @select_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     field = @bot.execute_step(:get_field, { name: "select_id" }, nil, form)
@@ -52,7 +49,6 @@ class CapybaraBotTest < Minitest::Test
   end
 
   def test_select_value_method
-    skip
     @bot.execute_step(:go, @select_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     field = @bot.execute_step(:get_field, { name: "select_id" }, nil, form)
@@ -64,42 +60,53 @@ class CapybaraBotTest < Minitest::Test
   end
 
   def test_checking_multiple_values
-    skip
     @bot.execute_step(:go, @checkbox_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
-    @bot.execute_step(:select_checkbox, [ { value: '110' }, { value: '120' }], nil, form)
+    @bot.execute_step(:select_checkbox, [{ value: "110" }, { value: "120" }], nil, form)
+    assert @bot.bot.has_checked_field? "one"
+    assert @bot.bot.has_checked_field? "two"
+    assert @bot.bot.has_no_checked_field? "three"
+  end
+
+  def test_checking_multiple_values_with_css
+    @bot.execute_step(:go, @checkbox_test_file)
+    form = @bot.execute_step(:get_form, id: "form_id")
+    @bot.execute_step(:select_checkbox, ".checkbox1", nil, form)
+    assert @bot.bot.has_checked_field? "one"
+    assert @bot.bot.has_no_checked_field? "two"
+    assert @bot.bot.has_no_checked_field? "three"
+  end
+
+  def test_save_value
+    @bot.execute_step(:go, @checkbox_test_file)
+    form = @bot.execute_step(:get_form, id: "form_id")
+    @bot.execute_step(:select_checkbox, ".checkbox1", nil, form)
     val_hash = {}
-    @bot.save_value('//input', 'checkboxes', nil, val_hash)
+    @bot.save_value("//input", "checkboxes", nil, val_hash)
     assert val_hash[:checkboxes]
-    assert @bot.page.forms[0].checkboxes[0].checked?
-    assert @bot.page.forms[0].checkboxes[1].checked?
-    refute @bot.page.forms[0].checkboxes[2].checked?
   end
 
   def test_radio_button_select_method
-    skip
     @bot.execute_step(:go, @radio_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     el = @bot.execute_step(:select_radio_button, { value: "150" }, nil, form)
-    assert el.checked
+    assert el.selected?
     assert_equal "150", el.value
   end
 
   def test_input_method
-    skip
     @bot.execute_step(:go, @input_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     el = @bot.execute_step(:fill_in_input, { name: "Username" }, "Andrew", form)
-    assert_equal "Andrew", el["Username"]
+    assert_equal "Andrew", el.find("input[name='Username']").value
   end
 
   def test_select_first_radio_button
-    skip
     @bot.execute_step(:go, @radio_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     el = @bot.execute_step(:select_first_radio_button, nil, nil, form)
     assert_equal "140", el.value
-    assert el.checked
+    assert el.selected?
   end
 
   def test_save_html
@@ -121,20 +128,19 @@ class CapybaraBotTest < Minitest::Test
   end
 
   def test_first_last_form_select
-    skip
     @bot.execute_step(:go, @multiple_form_file)
     form = @bot.execute_step(:get_form, "first")
-    assert_equal 'form_one', form.dom_id
+    assert_equal "form_one", form[:id]
 
     form_two = @bot.execute_step(:get_form, "last")
-    assert_equal 'form_two', form_two.dom_id
+    assert_equal "form_two", form_two[:id]
   end
 
   def test_file_upload_functionality
-    skip
     @bot.execute_step(:go, @file_upload_file)
     form = @bot.execute_step(:get_form, "first")
     @bot.execute_step(:set_file_upload, "first", "file", form)
-    assert_equal "file", form.file_uploads[0].file_name
+    # NOTE: value #=> "C:\fakepath\file"
+    assert form.find("input[type='file']", match: :first).value.include? "file"
   end
 end

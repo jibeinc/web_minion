@@ -5,6 +5,7 @@ require "forwardable"
 module WebMinion
   class CapybaraBot < WebMinion::Bot
     extend Forwardable
+    attr_reader :bot
     delegate [:body] => :@bot
 
     # Initializes a CapybaraBot
@@ -66,8 +67,18 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [String]
     def set_file_upload(target, value, element)
-      raise NotImplementedError
-      # FileUploadElement.new(@bot, target, value, element).set_file
+      if target.is_a?(String) && %w(first last).include?(target)
+        file_upload = element.find_all(:css, "input[type='file']").send(target)
+      elsif target.is_a?(String)
+        target_type = %r{^//} =~ target ? :xpath : :css
+        file_upload = element.find(target_type, target, match: :first)
+      elsif target.is_a?(Hash)
+        key, input_name = target.first
+        locator = "input[#{key}='#{input_name}']"
+        file_upload = element.find(:css, locator, match: :first)
+      end
+
+      file_upload.set(File.absolute_path(value))
     end
 
     # Saves the current page.
@@ -92,13 +103,17 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [String]
     def save_value(target, value, _element, val_hash)
-      raise NotImplementedError
-      element = @bot.page.search(target)
-      if val_hash[value.to_sym]
-        val_hash[value.to_sym] << element if element
+      target_type = %r{^//} =~ target ? :xpath : :css
+      elements = @bot.find_all(target_type, target)
+      return val_hash if elements.empty?
+
+      if elements.size == 1
+        val_hash[value.to_sym] = elements.first
       else
-        val_hash[value.to_sym] = element if element
+        val_hash[value.to_sym] = elements
       end
+
+      val_hash
     end
 
     ## FORM METHODS ##
@@ -111,8 +126,17 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [String]
     def get_form(target, _value, _element)
-      raise NotImplementedError
-      FormElement.new(@bot, target, nil, nil).get
+      if target.is_a?(Hash)
+        type, target = target.first
+        return @bot.find(type, target)
+      elsif target.is_a?(String)
+        index = %w(first last).index(target)
+        return @bot.find(target) if index < 0
+      end
+
+      index = target if index < 0
+
+      @bot.find_all("form")[index]
     end
 
     # Finds the form field for a given element.
@@ -133,10 +157,11 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [String]
     def fill_in_input(target, value, element)
-      raise NotImplementedError
-      input = element[target]
+      key, input_name = target.first
+      input = element.find("input[#{key}='#{input_name}']")
       raise(NoInputFound, "For target: #{target}") unless input
-      element[target] = value
+      input.set value
+
       element
     end
 
@@ -173,7 +198,12 @@ module WebMinion
       #
       #       1. element.select("Hello")
       #       2. element.find("option[value='1']").select_option
-      element.select(target)
+      if target.is_a?(Hash)
+        key, value = target.first
+        element.find("option[#{key}='#{value}']").select_option
+      else
+        element.select(target)
+      end
     rescue Capybara::ElementNotFound
       element.find("option[value='#{target}']").select_option
     rescue Capybara::Ambiguous
@@ -187,11 +217,17 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [String]
     def select_checkbox(target, _value, element)
-      raise NotImplementedError
       if target.is_a?(Array)
-        target.each { |tar| select_checkbox(tar, nil, element) }
+        target.each do |tar|
+          key, value = tar.first
+          element.find(:css, "input[#{key}='#{value}']").set(true)
+        end
       else
-        element.checkbox_with(target).check
+        begin
+          element.check(target)
+        rescue Capybara::ElementNotFound
+          element.find(:css, target).set(true)
+        end
       end
     end
 
@@ -201,11 +237,23 @@ module WebMinion
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
     # @return [String]
-    def select_radio_button(target, _value, element)
-      raise NotImplementedError
-      radio = element.radiobutton_with(target)
-      radio.checked = true
-      radio
+    def select_radio_button(target, value, element)
+      if target.is_a?(Array)
+        return target.map { |tar| select_radio_button(tar, value, element) }
+      elsif target.is_a?(Hash)
+        key, value = target.first
+        radio = element.find(:css, "input[#{key}='#{value}']")
+        radio.set(true)
+      else
+        begin
+          element.choose(target)
+        rescue Capybara::ElementNotFound
+          radio = element.find(:css, target)
+          radio.set(true)
+        end
+      end
+
+      radio || element.find(target)
     end
 
     # Selects the first radio button
@@ -215,9 +263,9 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [String]
     def select_first_radio_button(_target, _value, element)
-      raise NotImplementedError
-      radio = element.radiobuttons.first
-      radio.checked = true
+      radio = element.find(:css, "input[type='radio']", match: :first)
+      radio.set(true)
+
       radio
     end
 
@@ -241,12 +289,8 @@ module WebMinion
     # @return [Boolean]
     def body_includes(_target, value, _element)
       if value.is_a?(Array)
-        # FIXME: use this (but test first)
-        # value.find { |v| body_includes(_target, v, _element) }
-        val_check_arr = []
-        value.each do |val|
-          val_check_arr << !!(body.index(val) && body.index(val) > 0)
-        end
+        # FIXME: this should probably return true if all the values exist.
+        val_check_arr = value.map { |v| body_includes(_target, v, _element) }
         val_check_arr.uniq.include?(true)
       else
         !!(body.index(value) && body.index(value) > 0)
