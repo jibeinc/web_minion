@@ -45,7 +45,7 @@ module WebMinion
     # @param target [String] the target (css or xpath) to be clicked
     # @param _value [String] the value (unused)
     # @param _element [Capybara::Node::Element] the element (unused)
-    # @return [String]
+    # @return [nil]
     def click(target, _value, _element)
       @bot.click_link_or_button(target)
     end
@@ -55,7 +55,7 @@ module WebMinion
     # @param target [String] the target (css or xpath) to be clicked
     # @param _value [String] the value (unused)
     # @param element [Capybara::Node::Element] the element (form) containing the target
-    # @return [String]
+    # @return [nil]
     def click_button_in_form(target, _value, element)
       element.find(target).click
     end
@@ -65,7 +65,7 @@ module WebMinion
     # @param target [String] the target
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [nil]
     def set_file_upload(target, value, element)
       if target.is_a?(String) && %w(first last).include?(target)
         file_upload = element.find_all(:css, "input[type='file']").send(target)
@@ -101,17 +101,17 @@ module WebMinion
     # @param target [String] the target
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [Hash]
     def save_value(target, value, _element, val_hash)
       target_type = %r{^//} =~ target ? :xpath : :css
       elements = @bot.find_all(target_type, target)
       return val_hash if elements.empty?
 
-      if elements.size == 1
-        val_hash[value.to_sym] = elements.first
-      else
-        val_hash[value.to_sym] = elements
-      end
+      val_hash[value.to_sym] = if elements.size == 1
+                                 elements.first
+                               else
+                                 val_hash[value.to_sym] = elements
+                               end
 
       val_hash
     end
@@ -124,7 +124,7 @@ module WebMinion
     # @param target [String] the target
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [Capybara::Node::Element]
     def get_form(target, _value, _element)
       if target.is_a?(Hash)
         type, target = target.first
@@ -155,7 +155,7 @@ module WebMinion
     # @param target [String] the target
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [Capybara::Node::Element]
     def fill_in_input(target, value, element)
       key, input_name = target.first
       input = element.find("input[#{key}='#{input_name}']")
@@ -170,7 +170,7 @@ module WebMinion
     # @param _target [String] the target (unused)
     # @param _value [String] the value (unused)
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [nil]
     def submit(_target, _value, element)
       element.find('input[type="submit"]').click
     rescue Capybara::ElementNotFound
@@ -182,7 +182,7 @@ module WebMinion
     # @param target [String] the target, the label or value for the Select Box
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [Capybara::Node::Element]
     def select_field(target, _value, element)
       # NOTE: Capybara selects from the option's label, i.e. the text, not the
       #       option value. If it can't find the matching text, it raises a
@@ -215,7 +215,7 @@ module WebMinion
     # @param target [String] the target
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [nil]
     def select_checkbox(target, _value, element)
       if target.is_a?(Array)
         target.each do |tar|
@@ -236,7 +236,7 @@ module WebMinion
     # @param target [String] the target
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [Capybara::Node::Element]
     def select_radio_button(target, value, element)
       if target.is_a?(Array)
         return target.map { |tar| select_radio_button(tar, value, element) }
@@ -261,7 +261,7 @@ module WebMinion
     # @param target [String] the target
     # @param value [String] the value
     # @param element [Capybara::Node::Element] the element
-    # @return [String]
+    # @return [Capybara::Node::Element]
     def select_first_radio_button(_target, _value, element)
       radio = element.find(:css, "input[type='radio']", match: :first)
       radio.set(true)
@@ -283,14 +283,14 @@ module WebMinion
 
     # Tests if the body includes the value or values provided.
     #
-    # @param _target [String] the target (unused)
+    # @param target [String] the target
     # @param value [String, Regexp, Array[String, Regexp]] the value
-    # @param _element [Capybara::Node::Element] the element
+    # @param element [Capybara::Node::Element] the element
     # @return [Boolean]
-    def body_includes(_target, value, _element)
+    def body_includes(target, value, element)
       if value.is_a?(Array)
         # FIXME: this should probably return true if all the values exist.
-        val_check_arr = value.map { |v| body_includes(_target, v, _element) }
+        val_check_arr = value.map { |v| body_includes(target, v, element) }
         val_check_arr.uniq.include?(true)
       else
         !!(body.index(value) && body.index(value) > 0)

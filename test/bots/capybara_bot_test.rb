@@ -7,12 +7,14 @@ class CapybaraBotTest < Minitest::Test
 
   def setup
     @bot = CapybaraBot.new(driver: :chrome)
-    @select_test_file = "file://#{Dir.pwd}/test/test_html/select_test.html"
-    @radio_test_file = "file://#{Dir.pwd}/test/test_html/radio_button_test.html"
-    @input_test_file = "file://#{Dir.pwd}/test/test_html/input_test.html"
-    @checkbox_test_file = "file://#{Dir.pwd}/test/test_html/checkbox_test.html"
-    @multiple_form_file = "file://#{Dir.pwd}/test/test_html/multiple_forms_test.html"
-    @file_upload_file = "file://#{Dir.pwd}/test/test_html/file_upload_test.html"
+    file_path = "file://#{Dir.pwd}/test/test_html"
+
+    @select_test_file = "#{file_path}/select_test.html"
+    @radio_test_file = "#{file_path}/radio_button_test.html"
+    @input_test_file = "#{file_path}/input_test.html"
+    @checkbox_test_file = "#{file_path}/checkbox_test.html"
+    @multiple_form_file = "#{file_path}/multiple_forms_test.html"
+    @file_upload_file = "#{file_path}/file_upload_test.html"
   end
 
   def test_body_includes
@@ -24,7 +26,7 @@ class CapybaraBotTest < Minitest::Test
     body_file = "file://#{Dir.pwd}/test/test_html/body_text_test.html"
     @bot.execute_step(:go, body_file)
     assert @bot.execute_step(:body_includes, nil, ["Test Two", "Nothing"])
-    refute @bot.execute_step(:body_includes, nil, ["Nothing", "Here"])
+    refute @bot.execute_step(:body_includes, nil, %w(Nothing Here))
   end
 
   def test_get_form
