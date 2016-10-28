@@ -1,4 +1,4 @@
-require "mechanize"
+require "capybara"
 require "web_minion/bots/bot"
 require "forwardable"
 
