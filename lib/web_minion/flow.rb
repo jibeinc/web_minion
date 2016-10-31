@@ -27,7 +27,8 @@ module WebMinion
 
     def self.build_via_json(rule_json, vars = {})
       ruleset = JSON.parse(rule_json)
-      bot = if ruleset["config"]["driver"] == "capybara"
+      driver = ruleset["config"]["driver"] || "mechanize"
+      bot = if driver == "mechanize"
               MechanizeBot.new(ruleset["config"])
             else
               CapybaraBot.new(ruleset["config"])

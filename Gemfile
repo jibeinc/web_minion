@@ -4,7 +4,6 @@ gem "mechanize"
 gem "capybara"
 gem "poltergeist"
 gem "selenium-webdriver"
-gem "capybara-webkit"
 
 group :development do
   gem "pry"
