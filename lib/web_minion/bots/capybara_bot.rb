@@ -22,7 +22,7 @@ module WebMinion
       else
         Capybara.register_driver @driver do |app|
           Capybara::Selenium::Driver.new(app, browser:  @driver)
-        end
+        end unless Capybara.drivers.include?(@driver)
       end
 
       @bot = Capybara::Session.new(@driver)
