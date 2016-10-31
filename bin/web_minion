@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+# Usage: bin/web_minion test/test_json/capybara_flow.json
+require "bundler/setup"
+require "web_minion"
+require "web_minion/drivers/capybara"
+require "pry"
+Capybara.register_driver :poltergeist do |app|
+  options = {
+    js_errors: false,
+    timeout: 120,
+    debug: false,
+    phantomjs_options: ["--load-images=no", "--disk-cache=false"],
+    inspector: false,
+  }
+  Capybara::Poltergeist::Driver.new(app, options)
+end
+
+web_minion = WebMinion::Flow.build_via_json(File.read(ARGV[0]))
+result = web_minion.perform
+puts result[:history].status
+puts result[:saved_vars].to_json if result[:saved_vars]
