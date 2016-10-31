@@ -1,12 +1,22 @@
 require "test_helper"
-require "capybara"
-require "web_minion/bots/capybara_bot"
+require "web_minion/drivers/capybara"
 
 class CapybaraBotTest < Minitest::Test
   include WebMinion
 
   def setup
-    @bot = CapybaraBot.new(driver: :chrome)
+    @bot = CapybaraBot.new("driver" => :poltergeist) do
+      Capybara.register_driver :poltergeist do |app|
+        options = {
+          js_errors: false,
+          timeout: 120,
+          debug: false,
+          phantomjs_options: ["--load-images=no", "--disk-cache=false"],
+          inspector: false,
+        }
+        Capybara::Poltergeist::Driver.new(app, options)
+      end
+    end
     file_path = "file://#{Dir.pwd}/test/test_html"
 
     @select_test_file = "#{file_path}/select_test.html"
@@ -92,7 +102,7 @@ class CapybaraBotTest < Minitest::Test
     @bot.execute_step(:go, @radio_test_file)
     form = @bot.execute_step(:get_form, id: "form_id")
     el = @bot.execute_step(:select_radio_button, { value: "150" }, nil, form)
-    assert el.selected?
+    assert el.checked?
     assert_equal "150", el.value
   end
 
@@ -108,7 +118,7 @@ class CapybaraBotTest < Minitest::Test
     form = @bot.execute_step(:get_form, id: "form_id")
     el = @bot.execute_step(:select_first_radio_button, nil, nil, form)
     assert_equal "140", el.value
-    assert el.selected?
+    assert el.checked?
   end
 
   def test_save_html
@@ -139,10 +149,11 @@ class CapybaraBotTest < Minitest::Test
   end
 
   def test_file_upload_functionality
+    file = URI.parse(@file_upload_file)
     @bot.execute_step(:go, @file_upload_file)
     form = @bot.execute_step(:get_form, "first")
-    @bot.execute_step(:set_file_upload, "first", "file", form)
+    @bot.execute_step(:set_file_upload, "first", file.path, form)
     # NOTE: value #=> "C:\fakepath\file"
-    assert form.find("input[type='file']", match: :first).value.include? "file"
+    assert form.find("input[type='file']", match: :first).value.include?(file.path.split("/").last)
   end
 end

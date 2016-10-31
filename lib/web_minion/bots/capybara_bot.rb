@@ -15,15 +15,17 @@ module WebMinion
     # @return [CapybaraBot]
     def initialize(config = {})
       super(config)
-      Capybara.register_driver config[:driver] do |app|
-        options = {
-          browser: config.fetch(:driver)
-        }
+      @driver = config.fetch("driver").to_sym
 
-        Capybara::Selenium::Driver.new(app, options)
+      if block_given?
+        yield
+      else
+        Capybara.register_driver @driver do |app|
+          Capybara::Selenium::Driver.new(app, browser:  @driver)
+        end
       end
 
-      @bot = Capybara::Session.new(config[:driver])
+      @bot = Capybara::Session.new(@driver)
     end
 
     def page
@@ -77,6 +79,8 @@ module WebMinion
         locator = "input[#{key}='#{input_name}']"
         file_upload = element.find(:css, locator, match: :first)
       end
+
+      raise Errno::ENOENT unless File.exist?(File.absolute_path(value))
 
       file_upload.set(File.absolute_path(value))
     end
