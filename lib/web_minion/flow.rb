@@ -74,7 +74,7 @@ module WebMinion
     def results
       {
         history: @history,
-        saved_vars: @saved_vars
+        saved_values: @saved_values
       }
     end
 
