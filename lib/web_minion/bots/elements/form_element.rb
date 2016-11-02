@@ -22,7 +22,7 @@ class FormElement < MechanizeElement
 
   def first_last_get
     if @target == "first"
-      @bot.page.forms.first 
+      @bot.page.forms.first
     elsif @target == "last"
       @bot.page.forms.last
     else

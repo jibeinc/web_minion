@@ -47,8 +47,8 @@ module WebMinion
     end
 
     def vars=(vars)
-      @vars = Hash[vars.collect{|k,v| [k.to_s, v]}] 
-    end 
+      @vars = Hash[vars.collect{ |k, v| [k.to_s, v] }]
+    end
 
     def perform(bot, element = nil, saved_values)
       bot.execute_step(@method, @target, @value, element, saved_values)
@@ -75,14 +75,14 @@ module WebMinion
       end
       VALID_METHODS[:main_methods].include?(method)
     end
-  
+
     private
 
     def replace_all_variables
       %w(value target).each do |field|
         next if send(field).nil?
         send("#{field}=", replace_variable(send(field)))
-      end  
+      end
     end
 
     def replace_variable(var)

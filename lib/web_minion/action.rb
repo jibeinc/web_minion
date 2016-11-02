@@ -19,7 +19,7 @@ module WebMinion
     def self.build_from_hash(fields = {}, vars = {})
       steps = fields["steps"].map do |step|
         begin
-          Step.new(step.merge({ "vars" => vars }))
+          Step.new(step.merge("vars" => vars))
         rescue NoValueForVariableError => e
           (step["skippable"] && (step["is_validator"].nil? || !step["is_validator"])) ? nil : raise(e, "Current step is missing variable. (step: #{step['name']})")
         end
