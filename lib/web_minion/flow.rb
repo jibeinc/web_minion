@@ -27,7 +27,12 @@ module WebMinion
 
     def self.build_via_json(rule_json, vars = {})
       ruleset = JSON.parse(rule_json)
-      bot = MechanizeBot.new(ruleset["config"])
+      driver = ruleset["config"]["driver"] || "mechanize"
+      bot = if driver == "mechanize"
+              MechanizeBot.new(ruleset["config"])
+            else
+              CapybaraBot.new(ruleset["config"])
+            end
       build_from_hash(ruleset["flow"].merge(bot: bot, vars: vars))
     end
 
@@ -69,7 +74,7 @@ module WebMinion
     def results
       {
         history: @history,
-        saved_vars: @saved_vars
+        saved_values: @saved_values
       }
     end
 

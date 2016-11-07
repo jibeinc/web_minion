@@ -1,6 +1,9 @@
 source "https://rubygems.org"
 
 gem "mechanize"
+gem "capybara"
+gem "poltergeist"
+gem "selenium-webdriver"
 
 group :development do
   gem "pry"

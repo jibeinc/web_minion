@@ -3,9 +3,7 @@ require "web_minion/bots/bot"
 require "web_minion/bots/elements/form_element"
 require "web_minion/bots/elements/file_upload_element"
 
-class MultipleOptionsFoundError < StandardError; end
-class NoInputFound < StandardError; end
-# Mechanize driven bot. More efficient, but can"t handle any dynamic js-driven
+# Mechanize driven bot. More efficient, but can't handle any dynamic js-driven
 # pages
 module WebMinion
   class MechanizeBot < WebMinion::Bot
@@ -138,5 +136,3 @@ module WebMinion
     end
   end
 end
-
-
