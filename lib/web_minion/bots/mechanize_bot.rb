@@ -52,11 +52,14 @@ module WebMinion
 
     def save_value(target, value, _element, val_hash)
       element = @bot.page.search(target)
+
       if val_hash[value.to_sym]
         val_hash[value.to_sym] << element if element
       else
         val_hash[value.to_sym] = element if element
       end
+
+      val_hash
     end
 
     ## FORM METHODS ##
