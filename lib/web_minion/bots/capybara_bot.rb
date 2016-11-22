@@ -26,6 +26,7 @@ module WebMinion
       end
 
       @bot = Capybara::Session.new(@driver)
+      @bot.driver.resize(config["dimensions"]["width"], config["dimensions"]["height"]) if config["dimensions"]
     end
 
     def page
