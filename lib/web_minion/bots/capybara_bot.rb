@@ -108,7 +108,7 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [Hash]
     def save_value(target, value, _element, val_hash)
-      target_type = %r{^//} =~ target ? :xpath : :css
+      target_type = %r{^/} =~ target ? :xpath : :css
       elements = @bot.find_all(target_type, target)
       return val_hash if elements.empty?
 
@@ -117,6 +117,7 @@ module WebMinion
                                else
                                  val_hash[value.to_sym] = elements.map { |e| Nokogiri::XML(e["outerHTML"]).children.first }
                                end
+
       val_hash
     end
 
