@@ -26,6 +26,7 @@ module WebMinion
       end
 
       @bot = Capybara::Session.new(@driver)
+      @bot.driver.resize(config["dimensions"]["width"], config["dimensions"]["height"]) if config["dimensions"]
     end
 
     def page
@@ -112,11 +113,10 @@ module WebMinion
       return val_hash if elements.empty?
 
       val_hash[value.to_sym] = if elements.size == 1
-                                 elements.first
+                                 Nokogiri::XML(elements.first["outerHTML"]).children.first
                                else
-                                 val_hash[value.to_sym] = elements
+                                 val_hash[value.to_sym] = elements.map { |e| Nokogiri::XML(e["outerHTML"]).children.first }
                                end
-
       val_hash
     end
 
