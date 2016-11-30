@@ -37,7 +37,9 @@ web_minion.perform
 Here's a sample login flow:
 
     {
-      "config": {},
+      "config": {
+        driver: "mechanize",
+        },
       "flow": {
         "name": "Login Flow",
         "actions": [
