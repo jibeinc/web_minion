@@ -133,7 +133,13 @@ module WebMinion
     def get_form(target, _value, _element)
       if target.is_a?(Hash)
         type, target = target.first
-        return @bot.find(type, target)
+        case type.to_sym
+        when :class
+          target = ".#{target}"
+        when :id
+          target = "##{target}"
+        end
+        return @bot.find(target)
       elsif target.is_a?(String)
         index = %w(first last).index(target)
         return @bot.find(target) if index < 0
