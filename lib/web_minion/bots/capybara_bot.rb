@@ -151,7 +151,10 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element containing the field
     # @return [Capybara::Node::Element]
     def get_field(target, _value, element)
-      # raise no element passed in? Invalid element?
+      # NOTE: Replace strings with symbols so that Capybara::Node::Element#find_field
+      #       does not throw an "invalid keys" ArgumentError.
+      target = Hash[target.map{|(k,v)| [k.to_sym,v]}]
+
       element.find_field(target)
     end
 
