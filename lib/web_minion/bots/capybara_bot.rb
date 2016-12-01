@@ -163,7 +163,7 @@ module WebMinion
     # @return [Capybara::Node::Element]
     def fill_in_input(target, value, element)
       key, input_name = target.first
-      input = element.find("input[#{key}='#{input_name}']")
+      input = element.find("[#{key}='#{input_name}']")
       raise(NoInputFound, "For target: #{target}") unless input
       input.set value
 
