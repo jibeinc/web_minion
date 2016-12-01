@@ -177,7 +177,7 @@ module WebMinion
     # @param element [Capybara::Node::Element] the element
     # @return [nil]
     def submit(_target, _value, element)
-      element.find('input[type="submit"]').click
+      element.find('[type="submit"]').click
     rescue Capybara::ElementNotFound
       element.click
     end
