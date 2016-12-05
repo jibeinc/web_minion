@@ -102,13 +102,14 @@ class MechanizeBotTest < Minitest::Test
   end
 
   def test_save_html_w_date
-    file_path = "#{Dir.pwd}/test/test_html-INSERT_DATE.html"
-    @bot.execute_step(:go, @input_test_file)
-    @bot.execute_step(:save_page_html, nil, file_path, nil)
-    new_file_path = Dir.glob("#{Dir.pwd}/test/test_html-*.html").first
-    assert File.exist? new_file_path
-    refute new_file_path == file_path
-    File.delete(new_file_path) if File.exist? new_file_path
+    Dir.mktmpdir do |dir|
+      file_path = "#{dir}/test/test_html-INSERT_DATE.html"
+      @bot.execute_step(:go, @input_test_file)
+      @bot.execute_step(:save_page_html, nil, file_path, nil)
+      new_file_path = Dir.glob("#{dir}/test/test_html-*.html").first
+      assert File.exist?(new_file_path), "New file should exist"
+      refute new_file_path == file_path, "New file should be different from original file"
+    end
   end
 
   def test_first_last_form_select

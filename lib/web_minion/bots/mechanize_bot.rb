@@ -135,6 +135,7 @@ module WebMinion
     private
 
     def write_html_file(filename)
+      FileUtils.mkdir_p(File.dirname(filename))
       File.open(filename, "w") { |f| f.puts body }
     end
   end
