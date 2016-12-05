@@ -157,6 +157,15 @@ class CapybaraBotTest < Minitest::Test
     assert_equal "form_two", form_two[:id]
   end
 
+  def test_first_last_form_with_single_form
+    @bot.execute_step(:go, @input_test_file)
+    form = @bot.execute_step(:get_form, "first")
+    assert_equal "form_id", form[:id]
+
+    form_two = @bot.execute_step(:get_form, "last")
+    assert_equal "form_id", form_two[:id]
+  end
+
   def test_file_upload_functionality
     file = URI.parse(@file_upload_file)
     @bot.execute_step(:go, @file_upload_file)

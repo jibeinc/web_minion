@@ -140,14 +140,12 @@ module WebMinion
           target = "##{target}"
         end
         return @bot.find(target)
-      elsif target.is_a?(String)
-        index = %w(first last).index(target)
-        return @bot.find(target) if index < 0
+      elsif target.is_a?(String) && %w(first last).include?(target)
+        index = target == "first" ? 0 : -1
+        @bot.find_all("form")[index]
+      else
+        raise "Invalid Target"
       end
-
-      index = target if index < 0
-
-      @bot.find_all("form")[index]
     end
 
     # Finds the form field for a given element.
