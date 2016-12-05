@@ -42,15 +42,15 @@ class FlowTest < Minitest::Test
   end
 
   def test_saved_values_returned_properly
-    flow = Flow.build_via_json(@json_five)
-    flow.actions[1].steps[0].target = "file://#{Dir.pwd}/test/test_html/full_flow_test/first_page.html"
+    filename = "file://#{Dir.pwd}/test/test_html/full_flow_test/first_page.html"
+    flow = Flow.build_via_json(@json_five, filename: filename)
     flow.perform
     assert flow.saved_values[:saved_value]
   end
 
   def test_dynamic_value_set_works
     json = json_read("variable_usage.json")
-    flow = Flow.build_via_json(json, { save_value: 'new_value' })
-    assert_equal 'new_value', flow.actions[1].steps[1].target
+    flow = Flow.build_via_json(json, save_value: "new_value")
+    assert_equal "new_value", flow.actions[1].steps[1].target
   end
 end

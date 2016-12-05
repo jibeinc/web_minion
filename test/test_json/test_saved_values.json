@@ -10,7 +10,7 @@
         "steps": [
           {
             "name": "Step one",
-            "target": "file:///Users/andrewparrish/Documents/Development/Tasks/Post/jibe_ruleset_bot/test/test_html/full_flow_test/first_page.html",
+            "target": "@filename",
             "value": "",
             "method": "go",
             "is_validator": false
