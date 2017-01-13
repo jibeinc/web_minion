@@ -5,7 +5,7 @@
 - [![Issues](http://img.shields.io/github/issues/jibeinc/web_minion.svg?style=flat-square)](http://github.com/jibeinc/web_minion/issues)
 - [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
-WebMinion is a metadata-driven browser automation library. Instead of writing a custom bot with lots of code, you can write a JSON configuration and give it to WebMinion to run instead. You can use webdrivers like Mechanize, Capybara/Selenium (TODO) and Capybara/PhantomJS (TODO).
+WebMinion is a metadata-driven browser automation library. Instead of writing a custom bot with lots of code, you can write a JSON configuration and give it to WebMinion to run instead. You can use webdrivers like Mechanize, Capybara/Selenium and Capybara/PhantomJS.
 
 *NOTE* The public API is currently unstable and subject to change.
 
